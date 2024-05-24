@@ -1,7 +1,7 @@
 import {useState} from 'react';
 import React from 'react';
 
-export default function NewTasks({onAddNewTask, onClearAll}) {
+export default function NewTasks({onAddNewTask, onClearAll, userInput}) {
     const [newTask, setNewTask] = useState('');
 
     function handleSubmit(e) {
@@ -17,18 +17,25 @@ export default function NewTasks({onAddNewTask, onClearAll}) {
     }
 
     return (
-        <div>
-            <h1>Todo List</h1>
+        <div className="flex justify-center text-xs ">
             <form onSubmit={handleSubmit}>
                 <input
+                    className="bg-[#54edfe] text-black rounded mr-5 p-1.5 mt-7 mb-9 w-60"
                     type="text"
-                    placeholder="Add your task"
                     value={newTask}
                     onChange={(event) => setNewTask(event.target.value)}
                 />
-                <button className="submit--btn">Submit</button>
-                <button onClick={() => onClearAll()}>Clear all</button>
+                <button className="bg-[#54edfe] text-black rounded mr-2.5 p-1.5 font-bold w-9">
+                    Add
+                </button>
             </form>
+
+            <button
+                className="bg-[#54edfe] text-black rounded p-1.5 font-bold w-13 mt-7 mb-9"
+                onClick={() => onClearAll()}
+            >
+                Clear all
+            </button>
         </div>
     );
 }
