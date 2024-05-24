@@ -9,6 +9,7 @@ function classNames(...classes) {
 
 export default function App() {
     const [userInput, setUserInput] = useState([]);
+    const [showTasks, setShowTasks] = useState(false);
 
     function handleAddNewTask(task) {
         setUserInput((previousTasks) => [...previousTasks, task]);
@@ -16,37 +17,69 @@ export default function App() {
 
     function handleClearAll() {
         setUserInput([]);
+        setShowTasks(false);
     }
 
     function handleRemoveTask(id) {
         setUserInput((tasks) => tasks.filter((task) => task.id !== id));
     }
 
+    function handleShowTasks() {
+        showTasks === false
+            ? setShowTasks((show) => !show)
+            : setShowTasks((show) => show);
+    }
+
+    const currentDate = new Date();
+    const date = new Date(
+        new Date(currentDate).setDate(currentDate.getDate())
+    ).toDateString();
+
     return (
         <div className="flex flex-col bg-[#172a3a] max-w-6xl h-auto mt-8 mx-auto">
-            <div className="text-[#54edfe] p-5 flex text-center items-center justify-center">
-                <span className="flex-none w-30 text-md">Active tasks</span>
-                <h1 className="grow text-4xl font-bold ">To do List</h1>
-                <button className="flex-none w-30 text-md">Default view</button>
+            <div className="text-[#54edfe] p-5 flex text-center items-center justify-between shadow-[0_16px_9px_-10px_rgba(18,32,44,1)]">
+                <span className="text-md w-20">{date}</span>
+                <h1 className="text-4xl font-bold ">To do List</h1>
+                <button className=" text-md">
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        strokeWidth={1.5}
+                        stroke="currentColor"
+                        className="size-6 w-20"
+                    >
+                        <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            d="M12 18v-5.25m0 0a6.01 6.01 0 0 0 1.5-.189m-1.5.189a6.01 6.01 0 0 1-1.5-.189m3.75 7.478a12.06 12.06 0 0 1-4.5 0m3.75 2.383a14.406 14.406 0 0 1-3 0M14.25 18v-.192c0-.983.658-1.823 1.508-2.316a7.5 7.5 0 1 0-7.517 0c.85.493 1.509 1.333 1.509 2.316V18"
+                        />
+                    </svg>
+                </button>
             </div>
 
-            <div className="self-center text-white">
+            <div className="self-center text-white ">
                 <NewTasks
                     onAddNewTask={handleAddNewTask}
                     onClearAll={handleClearAll}
                     userInput={userInput}
+                    onShowTasks={handleShowTasks}
                 />
 
-                <div className="border-solid border-[1px] border-[#54edfe] rounded mb-7">
-                    {userInput.map((input) => (
-                        <TaskList
-                            userInput={input.newTask}
-                            id={input.id}
-                            key={input.id}
-                            onRemoveTask={handleRemoveTask}
-                        />
-                    ))}
-                </div>
+                {showTasks ? (
+                    <div className="border-solid border-[1px] border-[#54edfe] rounded mb-7">
+                        {userInput.map((input) => (
+                            <TaskList
+                                userInput={input.newTask}
+                                id={input.id}
+                                key={input.id}
+                                onRemoveTask={handleRemoveTask}
+                            />
+                        ))}
+                    </div>
+                ) : (
+                    ''
+                )}
             </div>
         </div>
     );
