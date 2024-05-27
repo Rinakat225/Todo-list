@@ -22,18 +22,18 @@ export default function NewTasks({onAddNewTask, onClearAll, onShowTasks}) {
         <div className="flex justify-center text-xs ">
             <form onSubmit={handleSubmit}>
                 <input
-                    className="bg-[#54edfe]  text-black rounded mr-5 p-1.5 mt-7 mb-9 w-60"
+                    className="bg-[#54edfe]  text-black rounded mr-2 p-1.5 mt-7 mb-9 w-60"
                     type="text"
                     value={newTask}
                     onChange={(event) => setNewTask(event.target.value)}
                 />
-                <button className="bg-[#54edfe] text-black rounded mr-2.5 p-1.5 font-bold w-9">
+                <button className="bg-[#54edfe] text-black rounded mr-5 p-1.5 font-bold w-9">
                     Add
                 </button>
             </form>
 
             <button
-                className="bg-[#54edfe] text-black rounded p-1.5 font-bold w-13 mt-7 mb-9"
+                className="bg-[#65717b] text-[#54edfe] rounded p-1.5 font-semibold w-13 mt-7 mb-9"
                 onClick={() => onClearAll()}
             >
                 Clear all

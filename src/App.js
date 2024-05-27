@@ -10,6 +10,8 @@ function classNames(...classes) {
 export default function App() {
     const [userInput, setUserInput] = useState([]);
     const [showTasks, setShowTasks] = useState(false);
+    const [edit, setEdit] = useState(null);
+    const [editedInput, setEditedInput] = useState('');
 
     function handleAddNewTask(task) {
         setUserInput((previousTasks) => [...previousTasks, task]);
@@ -28,6 +30,25 @@ export default function App() {
         showTasks === false
             ? setShowTasks((show) => !show)
             : setShowTasks((show) => show);
+    }
+
+    function handleEditTask(id) {
+        setEdit(id);
+        setEditedInput(userInput.id);
+    }
+
+    function handleSaveEdit(id) {
+        setUserInput((tasks) =>
+            tasks.map((task) =>
+                task.id === id ? {...task, newTask: editedInput} : task
+            )
+        );
+        setEdit(null);
+    }
+
+    function handleCancelEdit() {
+        setEdit(null);
+        setEditedInput('');
     }
 
     const currentDate = new Date();
@@ -74,6 +95,12 @@ export default function App() {
                                 id={input.id}
                                 key={input.id}
                                 onRemoveTask={handleRemoveTask}
+                                edit={edit}
+                                onEditTask={handleEditTask}
+                                editedInput={editedInput}
+                                setEditedInput={setEditedInput}
+                                onSaveEdit={handleSaveEdit}
+                                onCancelEdit={handleCancelEdit}
                             />
                         ))}
                     </div>
