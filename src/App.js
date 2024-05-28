@@ -1,6 +1,7 @@
 import {useState} from 'react';
 import NewTasks from './components/NewTasks';
 import TaskList from './components/TaskList';
+import Tabs from './components/Tabs';
 import {Fragment} from 'react';
 
 function classNames(...classes) {
@@ -12,6 +13,7 @@ export default function App() {
     const [showTasks, setShowTasks] = useState(false);
     const [edit, setEdit] = useState(null);
     const [editedInput, setEditedInput] = useState('');
+    const [currentTab, setCurrentTab] = useState('all');
 
     function handleAddNewTask(task) {
         setUserInput((previousTasks) => [...previousTasks, task]);
@@ -51,6 +53,24 @@ export default function App() {
         setEditedInput('');
     }
 
+    function handleCompletedTask(id) {
+        setUserInput((tasks) =>
+            tasks.map((task) =>
+                task.id === id ? {...task, completed: !task.completed} : task
+            )
+        );
+    }
+
+    function handleFilteredTasks() {
+        if (currentTab === 'completed') {
+            return userInput.filter((task) => task.completed);
+        } else if (currentTab === 'inProgress') {
+            return userInput.filter((task) => !task.completed);
+        } else {
+            return userInput;
+        }
+    }
+
     const currentDate = new Date();
     const date = new Date(
         new Date(currentDate).setDate(currentDate.getDate())
@@ -86,13 +106,22 @@ export default function App() {
                     userInput={userInput}
                     onShowTasks={handleShowTasks}
                 />
+                {showTasks ? (
+                    <Tabs
+                        currentTab={currentTab}
+                        setCurrentTab={setCurrentTab}
+                    />
+                ) : (
+                    ''
+                )}
 
                 {showTasks ? (
-                    <div className="border-solid border-[1px] border-[#54edfe] rounded mb-7">
-                        {userInput.map((input) => (
+                    <div className="border-solid border-[1px] border-[#54edfe] rounded-b-lg mb-7">
+                        {handleFilteredTasks().map((input) => (
                             <TaskList
                                 userInput={input.newTask}
                                 id={input.id}
+                                completed={input.completed}
                                 key={input.id}
                                 onRemoveTask={handleRemoveTask}
                                 edit={edit}
@@ -101,6 +130,7 @@ export default function App() {
                                 setEditedInput={setEditedInput}
                                 onSaveEdit={handleSaveEdit}
                                 onCancelEdit={handleCancelEdit}
+                                onCompletedTask={handleCompletedTask}
                             />
                         ))}
                     </div>

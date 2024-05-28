@@ -9,7 +9,7 @@ export default function NewTasks({onAddNewTask, onClearAll, onShowTasks}) {
 
         if (!newTask) return;
 
-        const task = {newTask, id: Date.now()};
+        const task = {newTask, completed: false, id: Date.now()};
 
         onAddNewTask(task);
 
