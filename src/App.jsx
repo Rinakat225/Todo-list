@@ -4,10 +4,6 @@ import TaskList from './components/TaskList';
 import Tabs from './components/Tabs';
 import {Fragment} from 'react';
 
-function classNames(...classes) {
-    return classes.filter(Boolean).join(' ');
-}
-
 export default function App() {
     const [newTask, setNewTask] = useState('');
     const [userInput, setUserInput] = useState([]);
@@ -85,7 +81,7 @@ export default function App() {
     ).toDateString();
 
     return (
-        <div className="border-[#172a3a] border-[1px] rounded flex flex-col bg-white bg-[#ddfbff] dark:bg-[#172a3a] max-w-6xl h-auto mt-8 mx-auto">
+        <div className="border-[#172a3a] border-[1px] rounded flex flex-col bg-[#ddfbff] dark:bg-[#172a3a] max-w-6xl h-auto mt-8 mx-auto">
             <div className="text-[#2e3f4e] dark:text-[#54edfe] p-5 flex text-center items-center justify-between shadow-[0_16px_9px_-10px_rgba(18,32,44,1)]">
                 <span className="text-md w-20">{date}</span>
                 <h1 className="text-4xl font-bold ">To do List</h1>
@@ -107,7 +103,7 @@ export default function App() {
                 </button>
             </div>
 
-            <div className="self-center text-white ">
+            <div className="self-center text-white">
                 <NewTasks
                     newTask={newTask}
                     setNewTask={setNewTask}

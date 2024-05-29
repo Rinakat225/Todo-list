@@ -23,7 +23,7 @@ export default function NewTasks({
     }
 
     return (
-        <div className="flex justify-center text-xs ">
+        <div className="flex justify-center text-xs">
             <form onSubmit={handleSubmit}>
                 <input
                     className="bg-[#2e3f4e] dark:bg-[#54edfe] text-[#54edfe] font-bold dark:text-black rounded mr-2 p-1.5 mt-7 mb-9 w-60"

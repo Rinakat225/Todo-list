@@ -18,8 +18,8 @@ export default function TaskList({
             <div
                 className={
                     completed
-                        ? 'text-base font-semibold flex justify-between p-3 gap-8 line-through  dark:decoration-[#54edfe] decoration-2 text-[#65717b] dark:text-[#65717b] '
-                        : 'text-[#172a3a] dark:text-[#54edfe] text-base font-semibold flex justify-between p-3 gap-8 '
+                        ? 'text-base font-semibold flex justify-between p-3 gap-8 line-through dark:decoration-[#54edfe] decoration-2 text-[#65717b] dark:text-[#65717b]'
+                        : 'text-[#172a3a] dark:text-[#54edfe] text-base font-semibold flex justify-between p-3 gap-8'
                 }
             >
                 <ul>
@@ -43,7 +43,7 @@ export default function TaskList({
                     {edit === id ? (
                         <span className="before:block before:absolute before:rounded-full before:bg-[#54edfe] before:w-8 before:h-8 before:top-50% before:left-50% before:-translate-x-1/4 before:-translate-y-1/4 relative inline-block">
                             <button
-                                className="mr-5 w-15  relative flex items-center justify-center"
+                                className="mr-5 w-15 relative flex items-center justify-center"
                                 onClick={() => onCancelEdit()}
                             >
                                 <svg
@@ -59,14 +59,14 @@ export default function TaskList({
                     ) : (
                         <span className="before:block before:absolute before:rounded-full before:bg-[#65717b] before:w-8 before:h-8 before:top-50% before:left-50% before:-translate-x-1/4 before:-translate-y-1/4 relative inline-block">
                             <button
-                                className="mr-5 w-15  relative flex items-center justify-center"
+                                className="mr-5 w-15 relative flex items-center justify-center"
                                 onClick={() => onRemoveTask(id)}
                             >
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
                                     viewBox="0 0 16 16"
                                     fill="#54edfe"
-                                    className="size-4 "
+                                    className="size-4"
                                 >
                                     <path
                                         fillRule="evenodd"
@@ -125,7 +125,7 @@ export default function TaskList({
                             }
                         >
                             <button
-                                className=" w-15 relative flex items-center justify-center"
+                                className="w-15 relative flex items-center justify-center"
                                 onClick={() => onCompletedTask(id)}
                             >
                                 <svg
@@ -147,7 +147,7 @@ export default function TaskList({
                             }
                         >
                             <button
-                                className=" w-15 relative flex items-center justify-center"
+                                className="w-15 relative flex items-center justify-center"
                                 onClick={() => onCompletedTask(id)}
                             >
                                 <svg
@@ -167,7 +167,7 @@ export default function TaskList({
                     )}
                 </div>
             </div>
-            <hr className="mt-1 border-[#172a3a] dark:border-[#54edfe] border-[0.1] min-w-72  grow" />
+            <hr className="mt-1 border-[#172a3a] dark:border-[#54edfe] border-[0.1] min-w-72 grow" />
         </div>
     );
 }
