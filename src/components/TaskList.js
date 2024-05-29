@@ -18,15 +18,15 @@ export default function TaskList({
             <div
                 className={
                     completed
-                        ? 'text-base font-semibold flex justify-between p-3 gap-8 text-[#65717b] line-through decoration-[#54edfe] decoration-2'
-                        : 'text-base font-semibold flex justify-between p-3 gap-8'
+                        ? 'text-base font-semibold flex justify-between p-3 gap-8 line-through  dark:decoration-[#54edfe] decoration-2 text-[#65717b] dark:text-[#65717b] '
+                        : 'text-[#172a3a] dark:text-[#54edfe] text-base font-semibold flex justify-between p-3 gap-8 '
                 }
             >
                 <ul>
                     <li key={id}>
                         {edit === id ? (
                             <input
-                                className="bg-[#54edfe] text-black rounded w-30"
+                                className="bg-[#65717b] dark:bg-[#54edfe] text-[#54edfe] dark:text-black rounded w-30"
                                 type="text"
                                 value={editedInput}
                                 onChange={(event) =>
@@ -167,7 +167,7 @@ export default function TaskList({
                     )}
                 </div>
             </div>
-            <hr className="mt-1 border-[#54edfe] border-[0.1] min-w-72  grow" />
+            <hr className="mt-1 border-[#172a3a] dark:border-[#54edfe] border-[0.1] min-w-72  grow" />
         </div>
     );
 }

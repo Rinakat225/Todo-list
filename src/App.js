@@ -9,17 +9,25 @@ function classNames(...classes) {
 }
 
 export default function App() {
+    const [newTask, setNewTask] = useState('');
     const [userInput, setUserInput] = useState([]);
     const [showTasks, setShowTasks] = useState(false);
     const [edit, setEdit] = useState(null);
     const [editedInput, setEditedInput] = useState('');
     const [currentTab, setCurrentTab] = useState('all');
+    const [dark, setDark] = useState(false);
+
+    function handleDarkMode() {
+        setDark(!dark);
+        document.body.classList.toggle('dark');
+    }
 
     function handleAddNewTask(task) {
         setUserInput((previousTasks) => [...previousTasks, task]);
     }
 
     function handleClearAll() {
+        setNewTask('');
         setUserInput([]);
         setShowTasks(false);
     }
@@ -77,11 +85,11 @@ export default function App() {
     ).toDateString();
 
     return (
-        <div className="flex flex-col bg-[#172a3a] max-w-6xl h-auto mt-8 mx-auto">
-            <div className="text-[#54edfe] p-5 flex text-center items-center justify-between shadow-[0_16px_9px_-10px_rgba(18,32,44,1)]">
+        <div className="border-[#172a3a] border-[1px] rounded flex flex-col bg-white bg-[#ddfbff] dark:bg-[#172a3a] max-w-6xl h-auto mt-8 mx-auto">
+            <div className="text-[#2e3f4e] dark:text-[#54edfe] p-5 flex text-center items-center justify-between shadow-[0_16px_9px_-10px_rgba(18,32,44,1)]">
                 <span className="text-md w-20">{date}</span>
                 <h1 className="text-4xl font-bold ">To do List</h1>
-                <button className=" text-md">
+                <button onClick={() => handleDarkMode()}>
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
                         fill="none"
@@ -101,6 +109,8 @@ export default function App() {
 
             <div className="self-center text-white ">
                 <NewTasks
+                    newTask={newTask}
+                    setNewTask={setNewTask}
                     onAddNewTask={handleAddNewTask}
                     onClearAll={handleClearAll}
                     userInput={userInput}
@@ -116,7 +126,7 @@ export default function App() {
                 )}
 
                 {showTasks ? (
-                    <div className="border-solid border-[1px] border-[#54edfe] rounded-b-lg mb-7">
+                    <div className="border-solid border-[1px] border-[#172a3a] dark:border-[#54edfe] rounded-b-lg mb-7">
                         {handleFilteredTasks().map((input) => (
                             <TaskList
                                 userInput={input.newTask}
