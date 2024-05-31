@@ -4,14 +4,14 @@ export default function TaskList({
     userInput,
     id,
     completed,
-    onRemoveTask,
+    onRemoveTaskButtonClick,
     edit,
-    onEditTask,
+    onEditTaskButtonClick,
     editedInput,
     setEditedInput,
-    onSaveEdit,
-    onCancelEdit,
-    onCompletedTask,
+    onSaveEditedTaskButtonClick,
+    onCancelEditingModeButtonClick,
+    onMarkTaskCompletedButtonClick,
 }) {
     return (
         <div className="flex flex-col p-2">
@@ -44,7 +44,7 @@ export default function TaskList({
                         <span className="before:block before:absolute before:rounded-full before:bg-[#54edfe] before:w-8 before:h-8 before:top-50% before:left-50% before:-translate-x-1/4 before:-translate-y-1/4 relative inline-block">
                             <button
                                 className="mr-5 w-15 relative flex items-center justify-center"
-                                onClick={() => onCancelEdit()}
+                                onClick={() => onCancelEditingModeButtonClick()}
                             >
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
@@ -60,7 +60,7 @@ export default function TaskList({
                         <span className="before:block before:absolute before:rounded-full before:bg-[#65717b] before:w-8 before:h-8 before:top-50% before:left-50% before:-translate-x-1/4 before:-translate-y-1/4 relative inline-block">
                             <button
                                 className="mr-5 w-15 relative flex items-center justify-center"
-                                onClick={() => onRemoveTask(id)}
+                                onClick={() => onRemoveTaskButtonClick(id)}
                             >
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
@@ -81,7 +81,7 @@ export default function TaskList({
                         <span className="before:block before:absolute before:rounded-full before:bg-[#54edfe] before:w-8 before:h-8 before:top-50% before:left-50% before:-translate-x-1/4 before:-translate-y-1/4 relative inline-block">
                             <button
                                 className="mr-5 w-15 relative flex items-center justify-center"
-                                onClick={() => onSaveEdit(id)}
+                                onClick={() => onSaveEditedTaskButtonClick(id)}
                             >
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
@@ -101,7 +101,7 @@ export default function TaskList({
                         <span className="before:block before:absolute before:rounded-full before:bg-[#65717b] before:w-8 before:h-8 before:top-50% before:left-50% before:-translate-x-1/4 before:-translate-y-1/4 relative inline-block">
                             <button
                                 className="mr-5 w-15 relative flex items-center justify-center"
-                                onClick={() => onEditTask(id)}
+                                onClick={() => onEditTaskButtonClick(id)}
                             >
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
@@ -126,7 +126,9 @@ export default function TaskList({
                         >
                             <button
                                 className="w-15 relative flex items-center justify-center"
-                                onClick={() => onCompletedTask(id)}
+                                onClick={() =>
+                                    onMarkTaskCompletedButtonClick(id)
+                                }
                             >
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
@@ -148,7 +150,9 @@ export default function TaskList({
                         >
                             <button
                                 className="w-15 relative flex items-center justify-center"
-                                onClick={() => onCompletedTask(id)}
+                                onClick={() =>
+                                    onMarkTaskCompletedButtonClick(id)
+                                }
                             >
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"

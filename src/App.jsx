@@ -13,59 +13,59 @@ export default function App() {
     const [currentTab, setCurrentTab] = useState('all');
     const [dark, setDark] = useState(false);
 
-    function handleDarkMode() {
+    const handleDarkModeButtonClick = () => {
         setDark(!dark);
         document.body.classList.toggle('dark');
-    }
+    };
 
-    function handleAddNewTask(task) {
+    const handleAddNewTaskButtonClick = (task) => {
         setUserInput((previousTasks) => [...previousTasks, task]);
-    }
+    };
 
-    function handleClearAll() {
+    const handleClearAllTasksButtonClick = () => {
         setNewTask('');
         setUserInput([]);
         setShowTasks(false);
-    }
+    };
 
-    function handleRemoveTask(id) {
+    const handleRemoveTaskButtonClick = (id) => {
         setUserInput((tasks) => tasks.filter((task) => task.id !== id));
-    }
+    };
 
-    function handleShowTasks() {
+    const handleShowExistingTasksConditionally = () => {
         showTasks === false
             ? setShowTasks((show) => !show)
             : setShowTasks((show) => show);
-    }
+    };
 
-    function handleEditTask(id) {
+    const handleEditTaskButtonClick = (id) => {
         setEdit(id);
         setEditedInput(userInput.id);
-    }
+    };
 
-    function handleSaveEdit(id) {
+    const handleSaveEditedTaskButtonClick = (id) => {
         setUserInput((tasks) =>
             tasks.map((task) =>
                 task.id === id ? {...task, newTask: editedInput} : task
             )
         );
         setEdit(null);
-    }
+    };
 
-    function handleCancelEdit() {
+    const handleCancelEditingModeButtonClick = () => {
         setEdit(null);
         setEditedInput('');
-    }
+    };
 
-    function handleCompletedTask(id) {
+    const handleMarkTaskCompletedButtonClick = (id) => {
         setUserInput((tasks) =>
             tasks.map((task) =>
                 task.id === id ? {...task, completed: !task.completed} : task
             )
         );
-    }
+    };
 
-    function handleFilteredTasks() {
+    const handleFilterExistingTasksConditionally = () => {
         if (currentTab === 'completed') {
             return userInput.filter((task) => task.completed);
         } else if (currentTab === 'inProgress') {
@@ -73,7 +73,7 @@ export default function App() {
         } else {
             return userInput;
         }
-    }
+    };
 
     const currentDate = new Date();
     const date = new Date(
@@ -85,7 +85,7 @@ export default function App() {
             <div className="text-[#2e3f4e] dark:text-[#54edfe] p-5 flex text-center items-center justify-between shadow-[0_16px_9px_-10px_rgba(18,32,44,1)]">
                 <span className="text-md w-20">{date}</span>
                 <h1 className="text-4xl font-bold ">To do List</h1>
-                <button onClick={() => handleDarkMode()}>
+                <button onClick={() => handleDarkModeButtonClick()}>
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
                         fill="none"
@@ -107,10 +107,12 @@ export default function App() {
                 <NewTasks
                     newTask={newTask}
                     setNewTask={setNewTask}
-                    onAddNewTask={handleAddNewTask}
-                    onClearAll={handleClearAll}
+                    onAddNewTaskButtonClick={handleAddNewTaskButtonClick}
+                    onClearAllTasksButtonClick={handleClearAllTasksButtonClick}
                     userInput={userInput}
-                    onShowTasks={handleShowTasks}
+                    onShowExistingTasksConditionally={
+                        handleShowExistingTasksConditionally
+                    }
                 />
                 {showTasks ? (
                     <Tabs
@@ -123,22 +125,34 @@ export default function App() {
 
                 {showTasks ? (
                     <div className="border-solid border-[1px] border-[#172a3a] dark:border-[#54edfe] rounded-b-lg mb-7">
-                        {handleFilteredTasks().map((input) => (
-                            <TaskList
-                                userInput={input.newTask}
-                                id={input.id}
-                                completed={input.completed}
-                                key={input.id}
-                                onRemoveTask={handleRemoveTask}
-                                edit={edit}
-                                onEditTask={handleEditTask}
-                                editedInput={editedInput}
-                                setEditedInput={setEditedInput}
-                                onSaveEdit={handleSaveEdit}
-                                onCancelEdit={handleCancelEdit}
-                                onCompletedTask={handleCompletedTask}
-                            />
-                        ))}
+                        {handleFilterExistingTasksConditionally().map(
+                            (input) => (
+                                <TaskList
+                                    userInput={input.newTask}
+                                    id={input.id}
+                                    completed={input.completed}
+                                    key={input.id}
+                                    onRemoveTaskButtonClick={
+                                        handleRemoveTaskButtonClick
+                                    }
+                                    edit={edit}
+                                    onEditTaskButtonClick={
+                                        handleEditTaskButtonClick
+                                    }
+                                    editedInput={editedInput}
+                                    setEditedInput={setEditedInput}
+                                    onSaveEditedTaskButtonClick={
+                                        handleSaveEditedTaskButtonClick
+                                    }
+                                    onCancelEditingModeButtonClick={
+                                        handleCancelEditingModeButtonClick
+                                    }
+                                    onMarkTaskCompletedButtonClick={
+                                        handleMarkTaskCompletedButtonClick
+                                    }
+                                />
+                            )
+                        )}
                     </div>
                 ) : (
                     ''
