@@ -1,5 +1,3 @@
-import React, {useState} from 'react';
-
 export default function TaskList({
     userInput,
     id,
@@ -28,6 +26,7 @@ export default function TaskList({
                             <input
                                 className="bg-[#65717b] dark:bg-[#54edfe] text-[#54edfe] dark:text-black rounded w-30"
                                 type="text"
+                                defaultValue={userInput}
                                 value={editedInput}
                                 onChange={(event) =>
                                     setEditedInput(event.target.value)
