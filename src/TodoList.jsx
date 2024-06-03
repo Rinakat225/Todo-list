@@ -18,7 +18,7 @@ export default function TodoList() {
     };
 
     const handleAddNewTaskButtonClick = (task) => {
-        setUserInput((previousTasks) => [...previousTasks, task]);
+        setUserInput((previousTasks) => [task, ...previousTasks]);
     };
 
     const handleClearAllTasksButtonClick = () => {
@@ -58,9 +58,14 @@ export default function TodoList() {
 
     const handleMarkTaskCompletedButtonClick = (id) => {
         setUserInput((tasks) =>
-            tasks.map((task) =>
-                task.id === id ? {...task, completed: !task.completed} : task
-            )
+            tasks
+                .map((task) =>
+                    task.id === id
+                        ? {...task, completed: !task.completed}
+                        : task
+                )
+                .slice()
+                .sort((a, b) => Number(a.completed) - Number(b.completed))
         );
     };
 
