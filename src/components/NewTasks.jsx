@@ -7,7 +7,6 @@ export default function NewTasks({
     onAddNewTaskButtonClick,
     onClearAllTasksButtonClick,
     onShowExistingTasksConditionally,
-    userInput,
 }) {
     const handleSubmitUserInputButtonClick = (e) => {
         e.preventDefault();
@@ -18,7 +17,6 @@ export default function NewTasks({
             newTask,
             completed: false,
             id: Date.now(),
-            order: userInput.length,
         };
 
         onAddNewTaskButtonClick(task);

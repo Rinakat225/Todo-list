@@ -12,6 +12,9 @@ export default function TaskList({
     onSaveEditedTaskButtonClick,
     onCancelEditingModeButtonClick,
     onMarkTaskCompletedButtonClick,
+    index,
+    onMoveTaskUpButtonClick,
+    onMoveTaskDownButtonClick,
 }) {
     const TASKLIST_DEFAULT_TEXT_CLASSNAMES =
         'text-base font-semibold flex justify-between p-3 gap-8 text-[#172a3a] dark:text-[#54edfe]';
@@ -34,6 +37,40 @@ export default function TaskList({
                         : `${TASKLIST_DEFAULT_TEXT_CLASSNAMES}`
                 }
             >
+                <div className="flex flex-col">
+                    <button onClick={() => onMoveTaskUpButtonClick(index)}>
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            strokeWidth={1.5}
+                            stroke="currentColor"
+                            className="size-4"
+                        >
+                            <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                d="m4.5 15.75 7.5-7.5 7.5 7.5"
+                            />
+                        </svg>
+                    </button>
+                    <button onClick={() => onMoveTaskDownButtonClick(index)}>
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            strokeWidth={1.5}
+                            stroke="currentColor"
+                            className="size-4"
+                        >
+                            <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                d="m19.5 8.25-7.5 7.5-7.5-7.5"
+                            />
+                        </svg>
+                    </button>
+                </div>
                 <ul>
                     <li key={id}>
                         {edit === id ? (

@@ -79,6 +79,27 @@ export default function TodoList() {
         }
     };
 
+    const handleMoveTaskUpButtonClick = (index) => {
+        if (index === 0) return;
+
+        const taskMovingUp = [...userInput];
+        [taskMovingUp[index], taskMovingUp[index - 1]] = [
+            taskMovingUp[index - 1],
+            taskMovingUp[index],
+        ];
+        setUserInput(taskMovingUp);
+    };
+    const handleMoveTaskDownButtonClick = (index) => {
+        if (index === userInput.length - 1) return;
+
+        const taskMovingDown = [...userInput];
+        [taskMovingDown[index], taskMovingDown[index + 1]] = [
+            taskMovingDown[index + 1],
+            taskMovingDown[index],
+        ];
+        setUserInput(taskMovingDown);
+    };
+
     const currentDate = new Date();
     const date = new Date(
         new Date(currentDate).setDate(currentDate.getDate())
@@ -113,7 +134,6 @@ export default function TodoList() {
                     setNewTask={setNewTask}
                     onAddNewTaskButtonClick={handleAddNewTaskButtonClick}
                     onClearAllTasksButtonClick={handleClearAllTasksButtonClick}
-                    userInput={userInput}
                     onShowExistingTasksConditionally={
                         handleShowExistingTasksConditionally
                     }
@@ -128,7 +148,7 @@ export default function TodoList() {
                 {showTasks && (
                     <div className="border-[#172a3a] border-[1px] dark:border-[#54edfe] rounded-b-lg mb-7">
                         {handleFilterExistingTasksConditionally().map(
-                            (input) => (
+                            (input, index) => (
                                 <TaskList
                                     userInput={input.newTask}
                                     id={input.id}
@@ -151,6 +171,13 @@ export default function TodoList() {
                                     }
                                     onMarkTaskCompletedButtonClick={
                                         handleMarkTaskCompletedButtonClick
+                                    }
+                                    index={index}
+                                    onMoveTaskUpButtonClick={
+                                        handleMoveTaskUpButtonClick
+                                    }
+                                    onMoveTaskDownButtonClick={
+                                        handleMoveTaskDownButtonClick
                                     }
                                 />
                             )
