@@ -1,4 +1,5 @@
 import React from 'react';
+import {twMerge} from 'tailwind-merge';
 
 export default function NewTasks({
     newTask,
@@ -21,22 +22,30 @@ export default function NewTasks({
         onShowExistingTasksConditionally();
     };
 
+    const NEWTASKS_DEFAULT_CLASSNAMES =
+        'bg-[#2e3f4e] dark:bg-[#54edfe] text-[#54edfe] dark:text-black font-bold rounded p-1.5 mt-7 mb-9 w-60';
+
     return (
         <div className="flex justify-center text-xs">
             <form onSubmit={handleSubmitUserInputButtonClick}>
                 <input
-                    className="bg-[#2e3f4e] dark:bg-[#54edfe] text-[#54edfe] font-bold dark:text-black rounded mr-2 p-1.5 mt-7 mb-9 w-60"
+                    className={twMerge(NEWTASKS_DEFAULT_CLASSNAMES, 'mr-2')}
                     type="text"
                     value={newTask}
                     onChange={(event) => setNewTask(event.target.value)}
                 />
-                <button className="bg-[#2e3f4e] dark:bg-[#54edfe] text-[#54edfe] dark:text-black rounded mr-5 p-1.5 font-bold w-9">
+                <button
+                    className={twMerge(NEWTASKS_DEFAULT_CLASSNAMES, 'mr-5 w-9')}
+                >
                     Add
                 </button>
             </form>
 
             <button
-                className="border-solid border-[1px] border-[#2e3f4e] bg-[#54edfe] dark:bg-[#65717b] text-[#172a3a] dark:text-[#54edfe] rounded p-1.5 font-semibold w-13 mt-7 mb-9"
+                className={twMerge(
+                    NEWTASKS_DEFAULT_CLASSNAMES,
+                    'bg-[#54edfe] dark:bg-[#65717b] text-[#172a3a] dark:text-[#54edfe] w-13 border-solid border-[1px] border-[#2e3f4e]'
+                )}
                 onClick={() => onClearAllTasksButtonClick()}
             >
                 Clear all

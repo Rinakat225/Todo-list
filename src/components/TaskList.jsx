@@ -1,3 +1,5 @@
+import {twMerge} from 'tailwind-merge';
+
 export default function TaskList({
     userInput,
     id,
@@ -11,13 +13,25 @@ export default function TaskList({
     onCancelEditingModeButtonClick,
     onMarkTaskCompletedButtonClick,
 }) {
+    const TASKLIST_DEFAULT_TEXT_CLASSNAMES =
+        'text-base font-semibold flex justify-between p-3 gap-8 text-[#172a3a] dark:text-[#54edfe]';
+
+    const TASKLIST_BTN_CLASSNAMES =
+        'mr-5 w-15 relative flex items-center justify-center';
+
+    const TASKLIST_BEFORE_ELEMENT_CLASSNAMES =
+        'before:block before:absolute before:rounded-full before:bg-[#65717b] before:w-8 before:h-8 before:top-50% before:left-50% before:-translate-x-1/4 before:-translate-y-1/4 relative inline-block';
+
     return (
         <div className="flex flex-col p-2">
             <div
                 className={
                     completed
-                        ? 'text-base font-semibold flex justify-between p-3 gap-8 line-through dark:decoration-[#54edfe] decoration-2 text-[#65717b] dark:text-[#65717b]'
-                        : 'text-[#172a3a] dark:text-[#54edfe] text-base font-semibold flex justify-between p-3 gap-8'
+                        ? `${twMerge(
+                              TASKLIST_DEFAULT_TEXT_CLASSNAMES,
+                              'text-[#65717b] dark:text-[#65717b] line-through decoration-[#54edfe] decoration-2'
+                          )}`
+                        : `${TASKLIST_DEFAULT_TEXT_CLASSNAMES}`
                 }
             >
                 <ul>
@@ -40,9 +54,14 @@ export default function TaskList({
 
                 <div>
                     {edit === id ? (
-                        <span className="before:block before:absolute before:rounded-full before:bg-[#54edfe] before:w-8 before:h-8 before:top-50% before:left-50% before:-translate-x-1/4 before:-translate-y-1/4 relative inline-block">
+                        <span
+                            className={twMerge(
+                                TASKLIST_BEFORE_ELEMENT_CLASSNAMES,
+                                'before:bg-[#54edfe]'
+                            )}
+                        >
                             <button
-                                className="mr-5 w-15 relative flex items-center justify-center"
+                                className={TASKLIST_BTN_CLASSNAMES}
                                 onClick={() => onCancelEditingModeButtonClick()}
                             >
                                 <svg
@@ -56,9 +75,9 @@ export default function TaskList({
                             </button>
                         </span>
                     ) : (
-                        <span className="before:block before:absolute before:rounded-full before:bg-[#65717b] before:w-8 before:h-8 before:top-50% before:left-50% before:-translate-x-1/4 before:-translate-y-1/4 relative inline-block">
+                        <span className={TASKLIST_BEFORE_ELEMENT_CLASSNAMES}>
                             <button
-                                className="mr-5 w-15 relative flex items-center justify-center"
+                                className={TASKLIST_BTN_CLASSNAMES}
                                 onClick={() => onRemoveTaskButtonClick(id)}
                             >
                                 <svg
@@ -77,9 +96,14 @@ export default function TaskList({
                         </span>
                     )}
                     {edit === id ? (
-                        <span className="before:block before:absolute before:rounded-full before:bg-[#54edfe] before:w-8 before:h-8 before:top-50% before:left-50% before:-translate-x-1/4 before:-translate-y-1/4 relative inline-block">
+                        <span
+                            className={twMerge(
+                                TASKLIST_BEFORE_ELEMENT_CLASSNAMES,
+                                'before:bg-[#54edfe]'
+                            )}
+                        >
                             <button
-                                className="mr-5 w-15 relative flex items-center justify-center"
+                                className={TASKLIST_BTN_CLASSNAMES}
                                 onClick={() => onSaveEditedTaskButtonClick(id)}
                             >
                                 <svg
@@ -97,9 +121,9 @@ export default function TaskList({
                             </button>
                         </span>
                     ) : (
-                        <span className="before:block before:absolute before:rounded-full before:bg-[#65717b] before:w-8 before:h-8 before:top-50% before:left-50% before:-translate-x-1/4 before:-translate-y-1/4 relative inline-block">
+                        <span className={TASKLIST_BEFORE_ELEMENT_CLASSNAMES}>
                             <button
-                                className="mr-5 w-15 relative flex items-center justify-center"
+                                className={TASKLIST_BTN_CLASSNAMES}
                                 onClick={() => onEditTaskButtonClick(id)}
                             >
                                 <svg
@@ -119,12 +143,15 @@ export default function TaskList({
                         <span
                             className={
                                 edit !== id
-                                    ? 'before:block before:absolute before:rounded-full before:bg-[#65717b] before:w-8 before:h-8 before:top-50% before:left-50% before:-translate-x-1/4 before:-translate-y-1/4 relative inline-block'
+                                    ? `${TASKLIST_BEFORE_ELEMENT_CLASSNAMES}`
                                     : 'hidden'
                             }
                         >
                             <button
-                                className="w-15 relative flex items-center justify-center"
+                                className={twMerge(
+                                    TASKLIST_BTN_CLASSNAMES,
+                                    'mr-0'
+                                )}
                                 onClick={() =>
                                     onMarkTaskCompletedButtonClick(id)
                                 }
@@ -143,12 +170,15 @@ export default function TaskList({
                         <span
                             className={
                                 edit !== id
-                                    ? 'before:block before:absolute before:rounded-full before:bg-[#65717b] before:w-8 before:h-8 before:top-50% before:left-50% before:-translate-x-1/4 before:-translate-y-1/4 relative inline-block'
+                                    ? `${TASKLIST_BEFORE_ELEMENT_CLASSNAMES}`
                                     : 'hidden'
                             }
                         >
                             <button
-                                className="w-15 relative flex items-center justify-center"
+                                className={twMerge(
+                                    TASKLIST_BTN_CLASSNAMES,
+                                    'mr-0'
+                                )}
                                 onClick={() =>
                                     onMarkTaskCompletedButtonClick(id)
                                 }
