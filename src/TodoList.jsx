@@ -44,12 +44,15 @@ export default function TodoList() {
     };
 
     const handleSaveEditedTaskButtonClick = (id) => {
-        setUserInput((tasks) =>
-            tasks.map((task) =>
-                task.id === id ? {...task, newTask: editedInput} : task
-            )
-        );
-        setEdit(null);
+        {
+            editedInput &&
+                setUserInput((tasks) =>
+                    tasks.map((task) =>
+                        task.id === id ? {...task, newTask: editedInput} : task
+                    )
+                );
+            setEdit(null);
+        }
     };
 
     const handleCancelEditingModeButtonClick = () => {
