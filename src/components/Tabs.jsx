@@ -2,7 +2,7 @@ import {twMerge} from 'tailwind-merge';
 
 export default function Tabs({setCurrentTab, currentTab}) {
     const TABS_DEFAULT_CLASSNAMES =
-        'text-lg text-[#172a3a] dark:text-[#65717b] font-semibold p-1 w-1/3';
+        'text-lg text-[#172a3a] dark:text-[#65717b] font-semibold p-1 w-1/3 hover:bg-[#65717b] hover:text-[#54edfe] dark:hover:text-[#54edfe]';
     const TABS_ACTIVE_CLASSNAMES =
         'bg-[#65717b] dark:bg-[#65717b] text-[#54edfe] dark:text-[#54edfe]';
 

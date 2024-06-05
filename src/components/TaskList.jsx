@@ -26,11 +26,11 @@ export default function TaskList({
     const TASKLIST_DEFAULT_TEXT_CLASSNAMES =
         'text-base font-semibold flex justify-between items-center p-3 text-[#172a3a] dark:text-[#54edfe]';
 
-    const TASKLIST_BEFORE_ELEMENT_CLASSNAMES =
-        'mr-5 w-15 relative flex items-center justify-center';
+    const TASKLIST_ICONS_CLASSNAMES =
+        'mr-5 w-15 absolute flex items-center justify-center translate-x-1/2 -translate-y-1/2';
 
     const TASKLIST_BTN_CLASSNAMES =
-        'before:block before:absolute before:rounded-full before:bg-[#65717b] before:w-8 before:h-8 before:top-50% before:left-50% before:-translate-x-1/4 before:-translate-y-1/4 relative inline-block';
+        'block relative rounded-full bg-[#65717b] w-8 h-8 relative inline-block hover:ring-2 hover:ring-[#54edfe]';
 
     return (
         <div className="flex flex-col p-2 justify-center">
@@ -47,19 +47,19 @@ export default function TaskList({
                 <div className="flex gap-3 items-center">
                     <div className="flex flex-col">
                         <button onClick={() => onMoveTaskUpButtonClick(index)}>
-                            <ChevronUpIcon className="size-5" />
+                            <ChevronUpIcon className="size-5 hover:text-[#54edfe] dark:hover:text-[#65717b]" />
                         </button>
                         <button
                             onClick={() => onMoveTaskDownButtonClick(index)}
                         >
-                            <ChevronDownIcon className="size-5" />
+                            <ChevronDownIcon className="size-5 hover:text-[#54edfe] dark:hover:text-[#65717b]" />
                         </button>
                     </div>
                     <ul>
                         <li key={id}>
                             {edit === id ? (
                                 <input
-                                    className="bg-[#65717b] dark:bg-[#54edfe] text-[#54edfe] dark:text-black rounded w-30"
+                                    className="bg-[#65717b] dark:bg-[#54edfe] text-[#54edfe] dark:text-black rounded w-30 hover:ring-2 hover:ring-[#54edfe] hover:dark:ring-[#65717b]"
                                     type="text"
                                     defaultValue={userInput}
                                     value={editedInput}
@@ -74,19 +74,17 @@ export default function TaskList({
                     </ul>
                 </div>
 
-                <div>
+                <div className="flex gap-1">
                     {edit === id ? (
                         <button
                             onClick={() => onCancelEditingModeButtonClick()}
                             className={twMerge(
                                 TASKLIST_BTN_CLASSNAMES,
-                                'before:bg-[#54edfe]'
+                                'hover:dark:ring-[#54edfe]'
                             )}
                         >
-                            <span
-                                className={TASKLIST_BEFORE_ELEMENT_CLASSNAMES}
-                            >
-                                <XMarkIcon fill="#65717b" className="size-4" />
+                            <span className={TASKLIST_ICONS_CLASSNAMES}>
+                                <XMarkIcon fill="#54edfe" className="size-4" />
                             </span>
                         </button>
                     ) : (
@@ -94,9 +92,7 @@ export default function TaskList({
                             onClick={() => onRemoveTaskButtonClick(id)}
                             className={TASKLIST_BTN_CLASSNAMES}
                         >
-                            <span
-                                className={TASKLIST_BEFORE_ELEMENT_CLASSNAMES}
-                            >
+                            <span className={TASKLIST_ICONS_CLASSNAMES}>
                                 <TrashIcon fill="#54edfe" className="size-4" />
                             </span>
                         </button>
@@ -106,13 +102,11 @@ export default function TaskList({
                             onClick={() => onSaveEditedTaskButtonClick(id)}
                             className={twMerge(
                                 TASKLIST_BTN_CLASSNAMES,
-                                'before:bg-[#54edfe]'
+                                'hover:dark:ring-[#54edfe]'
                             )}
                         >
-                            <span
-                                className={TASKLIST_BEFORE_ELEMENT_CLASSNAMES}
-                            >
-                                <CheckIcon fill="#65717b" className="size-4" />
+                            <span className={TASKLIST_ICONS_CLASSNAMES}>
+                                <CheckIcon fill="#54edfe" className="size-4" />
                             </span>
                         </button>
                     ) : (
@@ -120,9 +114,7 @@ export default function TaskList({
                             onClick={() => onEditTaskButtonClick(id)}
                             className={TASKLIST_BTN_CLASSNAMES}
                         >
-                            <span
-                                className={TASKLIST_BEFORE_ELEMENT_CLASSNAMES}
-                            >
+                            <span className={TASKLIST_ICONS_CLASSNAMES}>
                                 <PencilSquareIcon
                                     fill="#54edfe"
                                     className="size-4"
@@ -142,7 +134,7 @@ export default function TaskList({
                         >
                             <span
                                 className={twMerge(
-                                    TASKLIST_BEFORE_ELEMENT_CLASSNAMES,
+                                    TASKLIST_ICONS_CLASSNAMES,
                                     'mr-0'
                                 )}
                             >
@@ -160,7 +152,7 @@ export default function TaskList({
                         >
                             <span
                                 className={twMerge(
-                                    TASKLIST_BEFORE_ELEMENT_CLASSNAMES,
+                                    TASKLIST_ICONS_CLASSNAMES,
                                     'mr-0'
                                 )}
                             >

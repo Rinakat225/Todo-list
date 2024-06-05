@@ -115,7 +115,7 @@ export default function TodoList() {
                 <span className="text-md w-20">{date}</span>
                 <h1 className="text-4xl font-bold">To do List</h1>
                 <button onClick={() => handleDarkModeButtonClick()}>
-                    <LightBulbIcon className="size-6 w-20" />
+                    <LightBulbIcon className="size-6 w-20 hover:text-[#54edfe] dark:hover:text-[#ddfbff]" />
                 </button>
             </div>
 

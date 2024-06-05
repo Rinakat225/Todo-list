@@ -27,7 +27,7 @@ export default function NewTasks({
     };
 
     const NEWTASKS_DEFAULT_CLASSNAMES =
-        'bg-[#2e3f4e] dark:bg-[#54edfe] text-[#54edfe] dark:text-black font-bold rounded p-1.5 mt-7 mb-9 w-60';
+        'bg-[#2e3f4e] dark:bg-[#54edfe] text-[#54edfe] dark:text-black font-bold rounded p-1.5 mt-7 mb-9 w-60 hover:bg-[#54edfe] hover:text-[#172a3a] dark:hover:bg-[#172a3a] dark:hover:text-[#54edfe] dark:hover:bg-[#65717b]';
 
     return (
         <div className="flex justify-center text-xs">
@@ -35,6 +35,7 @@ export default function NewTasks({
                 <input
                     className={twMerge(NEWTASKS_DEFAULT_CLASSNAMES, 'mr-2')}
                     type="text"
+                    placeholder="Write your task..."
                     value={newTask}
                     onChange={(event) => setNewTask(event.target.value)}
                 />
@@ -48,7 +49,7 @@ export default function NewTasks({
             <button
                 className={twMerge(
                     NEWTASKS_DEFAULT_CLASSNAMES,
-                    'bg-[#54edfe] dark:bg-[#65717b] text-[#172a3a] dark:text-[#54edfe] w-13 border-solid border-[1px] border-[#2e3f4e]'
+                    'bg-[#54edfe] dark:bg-[#65717b] text-[#172a3a] dark:text-[#54edfe] w-13 hover:bg-[#2e3f4e] hover:text-[#54edfe] dark:hover:bg-[#54edfe] dark:hover:text-[#172a3a]'
                 )}
                 onClick={() => onClearAllTasksButtonClick()}
             >
