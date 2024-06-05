@@ -9,6 +9,7 @@ import {CheckIcon} from '@heroicons/react/20/solid';
 
 export default function TaskList({
     userInput,
+    tag,
     id,
     completed,
     onRemoveTaskButtonClick,
@@ -22,6 +23,8 @@ export default function TaskList({
     index,
     onMoveTaskUpButtonClick,
     onMoveTaskDownButtonClick,
+    editedTag,
+    setEditedTag,
 }) {
     const TASKLIST_DEFAULT_TEXT_CLASSNAMES =
         'text-base font-semibold flex justify-between items-center p-3 text-[#172a3a] dark:text-[#54edfe]';
@@ -72,6 +75,21 @@ export default function TaskList({
                             )}
                         </li>
                     </ul>
+
+                    <div>
+                        {edit === id ? (
+                            <input
+                                type="text"
+                                defaultValue={tag}
+                                value={editedTag}
+                                onChange={(event) =>
+                                    setEditedTag(event.target.value)
+                                }
+                            />
+                        ) : (
+                            tag
+                        )}
+                    </div>
                 </div>
 
                 <div className="flex gap-1">
