@@ -8,6 +8,7 @@ export default function NewTasks({
     onShowExistingTasksConditionally,
     newTag,
     setNewTag,
+    handleShowTagButtonClick,
 }) {
     const handleSubmitUserInputButtonClick = (e) => {
         e.preventDefault();
@@ -19,6 +20,7 @@ export default function NewTasks({
             completed: false,
             id: Date.now(),
             newTag,
+            tag: false,
         };
 
         onAddNewTaskButtonClick(task);
@@ -26,6 +28,8 @@ export default function NewTasks({
         setNewTask('');
 
         onShowExistingTasksConditionally();
+
+        handleShowTagButtonClick(task.id);
 
         setNewTag('');
     };
@@ -49,7 +53,7 @@ export default function NewTasks({
                 <input
                     className={twMerge(
                         NEWTASKS_DEFAULT_CLASSNAMES,
-                        'w-60 mr-2'
+                        'w-32 mr-2'
                     )}
                     type="text"
                     placeholder="Write your tag..."

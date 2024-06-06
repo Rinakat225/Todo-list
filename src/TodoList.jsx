@@ -44,6 +44,19 @@ export default function TodoList() {
         setEdit(id);
         setEditedInput(userInput.id);
         setEditedTag(userInput.id);
+        {
+            !newTag &&
+                setUserInput((tasks) =>
+                    tasks.map((task) =>
+                        task.id === id
+                            ? {
+                                  ...task,
+                                  tag: !task.tag,
+                              }
+                            : task
+                    )
+                );
+        }
     };
 
     const handleSaveEditedTaskButtonClick = (id) => {
@@ -124,6 +137,35 @@ export default function TodoList() {
         setUserInput(taskMovingDown);
     };
 
+    const handleShowTagButtonClick = (id) => {
+        {
+            newTag &&
+                setUserInput((tasks) =>
+                    tasks.map((task) =>
+                        task.id === id
+                            ? {
+                                  ...task,
+                                  tag: !task.tag,
+                              }
+                            : task
+                    )
+                );
+        }
+    };
+
+    const handleRemoveTagButtonClick = (id) => {
+        setUserInput((tasks) =>
+            tasks.map((task) =>
+                task.id === id
+                    ? {
+                          ...task,
+                          newTag: '',
+                      }
+                    : task
+            )
+        );
+    };
+
     const currentDate = new Date();
     const date = new Date(
         new Date(currentDate).setDate(currentDate.getDate())
@@ -150,6 +192,7 @@ export default function TodoList() {
                     }
                     newTag={newTag}
                     setNewTag={setNewTag}
+                    handleShowTagButtonClick={handleShowTagButtonClick}
                 />
                 {showTasks && (
                     <Tabs
@@ -195,6 +238,9 @@ export default function TodoList() {
                                     }
                                     editedTag={editedTag}
                                     setEditedTag={setEditedTag}
+                                    onRemoveTagButtonClick={
+                                        handleRemoveTagButtonClick
+                                    }
                                 />
                             )
                         )}

@@ -6,6 +6,7 @@ import {XMarkIcon} from '@heroicons/react/20/solid';
 import {TrashIcon} from '@heroicons/react/20/solid';
 import {PencilSquareIcon} from '@heroicons/react/20/solid';
 import {CheckIcon} from '@heroicons/react/20/solid';
+import {MinusCircleIcon} from '@heroicons/react/16/solid';
 
 export default function TaskList({
     userInput,
@@ -25,6 +26,7 @@ export default function TaskList({
     onMoveTaskDownButtonClick,
     editedTag,
     setEditedTag,
+    onRemoveTagButtonClick,
 }) {
     const TASKLIST_DEFAULT_TEXT_CLASSNAMES =
         'text-base font-semibold flex justify-between items-center p-3 text-[#172a3a] dark:text-[#54edfe]';
@@ -34,6 +36,9 @@ export default function TaskList({
 
     const TASKLIST_BTN_CLASSNAMES =
         'block relative rounded-full bg-[#65717b] w-8 h-8 relative inline-block hover:ring-2 hover:ring-[#54edfe]';
+
+    const TASKLIST_EDIT_MODE_CLASSNAMES =
+        'bg-[#65717b] dark:bg-[#54edfe] text-[#54edfe] dark:text-black rounded w-30 hover:ring-2 hover:ring-[#54edfe] hover:dark:ring-[#65717b]';
 
     return (
         <div className="flex flex-col p-2 justify-center">
@@ -58,11 +63,11 @@ export default function TaskList({
                             <ChevronDownIcon className="size-5 hover:text-[#54edfe] dark:hover:text-[#65717b]" />
                         </button>
                     </div>
-                    <ul>
+                    <ul className="flex flex-col gap-1">
                         <li key={id}>
                             {edit === id ? (
                                 <input
-                                    className="bg-[#65717b] dark:bg-[#54edfe] text-[#54edfe] dark:text-black rounded w-30 hover:ring-2 hover:ring-[#54edfe] hover:dark:ring-[#65717b]"
+                                    className={TASKLIST_EDIT_MODE_CLASSNAMES}
                                     type="text"
                                     defaultValue={userInput}
                                     value={editedInput}
@@ -74,22 +79,64 @@ export default function TaskList({
                                 userInput
                             )}
                         </li>
-                    </ul>
+                        <div className="flex gap-1 items-center">
+                            {tag ? (
+                                <li className="text-xs text-[#65717b]">
+                                    #
+                                    {edit === id ? (
+                                        <input
+                                            className={twMerge(
+                                                TASKLIST_EDIT_MODE_CLASSNAMES,
+                                                'w-16'
+                                            )}
+                                            type="text"
+                                            defaultValue={tag}
+                                            value={editedTag}
+                                            onChange={(event) =>
+                                                setEditedTag(event.target.value)
+                                            }
+                                        />
+                                    ) : (
+                                        tag
+                                    )}
+                                </li>
+                            ) : (
+                                <li>
+                                    {edit === id && (
+                                        <input
+                                            className={twMerge(
+                                                TASKLIST_EDIT_MODE_CLASSNAMES,
+                                                'w-16 text-xs'
+                                            )}
+                                            type="text"
+                                            placeholder="add tag..."
+                                            value={editedTag}
+                                            onChange={(event) =>
+                                                setEditedTag(event.target.value)
+                                            }
+                                        />
+                                    )}
+                                </li>
+                            )}
 
-                    <div>
-                        {edit === id ? (
-                            <input
-                                type="text"
-                                defaultValue={tag}
-                                value={editedTag}
-                                onChange={(event) =>
-                                    setEditedTag(event.target.value)
-                                }
-                            />
-                        ) : (
-                            tag
-                        )}
-                    </div>
+                            {tag && (
+                                <button
+                                    onClick={() => onRemoveTagButtonClick(id)}
+                                    className={twMerge(
+                                        TASKLIST_BTN_CLASSNAMES,
+                                        'rounded h-4 w-4 hover:dark:ring-[#54edfe]'
+                                    )}
+                                >
+                                    <span className={TASKLIST_ICONS_CLASSNAMES}>
+                                        <MinusCircleIcon
+                                            fill="#54edfe"
+                                            className="size-2"
+                                        />
+                                    </span>
+                                </button>
+                            )}
+                        </div>
+                    </ul>
                 </div>
 
                 <div className="flex gap-1">
