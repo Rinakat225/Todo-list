@@ -63,6 +63,7 @@ export default function TaskList({
                             <ChevronDownIcon className="size-5 hover:text-[#54edfe] dark:hover:text-[#65717b]" />
                         </button>
                     </div>
+
                     <ul className="flex flex-col gap-1">
                         <li key={id}>
                             {edit === id ? (
@@ -79,6 +80,7 @@ export default function TaskList({
                                 userInput
                             )}
                         </li>
+
                         <div className="flex gap-1 items-center">
                             {tag ? (
                                 <li className="text-xs text-[#65717b]">
@@ -155,13 +157,14 @@ export default function TaskList({
                     ) : (
                         <button
                             onClick={() => onRemoveTaskButtonClick(id)}
-                            className={TASKLIST_BTN_CLASSNAMES}
+                            className="p-2 inline-flex items-center space-x-2 bg-red-500 rounded-full hover:bg-red-600 group"
                         >
-                            <span className={TASKLIST_ICONS_CLASSNAMES}>
-                                <TrashIcon fill="#54edfe" className="size-4" />
-                            </span>
+                            <TrashIcon className="size-4 text-white group-hover:text-black hover:text-black" />
+
+                            <span>foo</span>
                         </button>
                     )}
+
                     {edit === id ? (
                         <button
                             onClick={() => onSaveEditedTaskButtonClick(id)}
@@ -227,6 +230,7 @@ export default function TaskList({
                     )}
                 </div>
             </div>
+
             <hr className="mt-1 border-[#172a3a] dark:border-[#54edfe] border-[0.1] min-w-72 grow" />
         </div>
     );
