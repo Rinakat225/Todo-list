@@ -2,12 +2,12 @@ import {twMerge} from 'tailwind-merge';
 
 export default function Tabs({setCurrentTab, currentTab}) {
     const TABS_DEFAULT_CLASSNAMES =
-        'text-lg text-[#172a3a] dark:text-[#65717b] font-semibold p-1 w-1/3 hover:bg-[#65717b] hover:text-[#54edfe] dark:hover:text-[#54edfe]';
+        'p-1 w-1/3 rounded text-lg shadow-inner font-semibold text-[#7371fc] hover:text-[#cdc1ff] bg-[#f8f9fa] dark:bg-[#686779]';
     const TABS_ACTIVE_CLASSNAMES =
-        'bg-[#65717b] dark:bg-[#65717b] text-[#54edfe] dark:text-[#54edfe]';
+        'bg-[#7371fc] hover:text-white dark:bg-[#525166] text-white dark:text-[#cdc1ff]';
 
     return (
-        <div className="overflow-hidden flex justify-between border-solid border-b-0 border-[1px] border-[#172a3a] dark:border-[#54edfe] rounded-t-lg">
+        <div className="overflow-hidden flex justify-between gap-2 mb-3">
             <button
                 className={
                     currentTab === 'all'
@@ -26,13 +26,9 @@ export default function Tabs({setCurrentTab, currentTab}) {
                     currentTab === 'inProgress'
                         ? `${twMerge(
                               TABS_DEFAULT_CLASSNAMES,
-                              TABS_ACTIVE_CLASSNAMES,
-                              'border-[#172a3a] dark:border-[#54edfe] border-r-[1px] border-l-[1px]'
+                              TABS_ACTIVE_CLASSNAMES
                           )}`
-                        : `${twMerge(
-                              TABS_DEFAULT_CLASSNAMES,
-                              'border-[#172a3a] dark:border-[#54edfe] border-r-[1px] border-l-[1px]'
-                          )}`
+                        : `${twMerge(TABS_DEFAULT_CLASSNAMES)}`
                 }
                 onClick={() => setCurrentTab('inProgress')}
             >

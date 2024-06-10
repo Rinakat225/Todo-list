@@ -172,12 +172,14 @@ export default function TodoList() {
     ).toDateString();
 
     return (
-        <div className="border-[#172a3a] border-[1px] rounded flex flex-col bg-[#ddfbff] dark:bg-[#172a3a] max-w-6xl h-auto mt-8 mx-auto">
-            <div className="text-[#2e3f4e] dark:text-[#54edfe] p-5 flex text-center items-center justify-between shadow-[0_16px_9px_-10px_rgba(18,32,44,1)]">
+        <div className="h-auto mx-auto max-w-6xl mt-2 rounded shadow-xl flex flex-col bg-WHITE dark:bg-[#272640]">
+            <div className="p-5 flex text-center items-center justify-between text-[#7371fc]">
                 <span className="text-md w-20">{date}</span>
-                <h1 className="text-4xl font-bold">To do List</h1>
+                <h1 className="text-4xl font-bold text-[#7371fc]">
+                    To do List
+                </h1>
                 <button onClick={() => handleDarkModeButtonClick()}>
-                    <LightBulbIcon className="size-6 w-20 hover:text-[#54edfe] dark:hover:text-[#ddfbff]" />
+                    <LightBulbIcon className="size-6 w-20 text-[#7371fc] hover:text-[#cdc1ff] dark:hover:text-[#cdc1ff]" />
                 </button>
             </div>
 
@@ -202,7 +204,7 @@ export default function TodoList() {
                 )}
 
                 {showTasks && (
-                    <div className="border-[#172a3a] border-[1px] dark:border-[#54edfe] rounded-b-lg mb-7">
+                    <div className="mb-7">
                         {handleFilterExistingTasksConditionally().map(
                             (input, index) => (
                                 <TaskList

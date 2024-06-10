@@ -35,44 +35,33 @@ export default function NewTasks({
     };
 
     const NEWTASKS_DEFAULT_CLASSNAMES =
-        'bg-[#2e3f4e] dark:bg-[#54edfe] text-[#54edfe] dark:text-black font-bold rounded p-1.5 mt-7 mb-9 hover:bg-[#54edfe] hover:text-[#172a3a] dark:hover:bg-[#172a3a] dark:hover:text-[#54edfe] dark:hover:bg-[#65717b]';
+        'p-2 mr-2 font-bold rounded text-black dark:bg-[#525166] dark:text-black';
 
     return (
-        <div className="flex justify-center text-xs">
+        <div className="p-3 mt-3 mb-9 flex justify-center text-xs shadow-xl rounded">
             <form onSubmit={handleSubmitUserInputButtonClick}>
                 <input
-                    className={twMerge(
-                        NEWTASKS_DEFAULT_CLASSNAMES,
-                        'w-60 mr-2'
-                    )}
+                    className={twMerge(NEWTASKS_DEFAULT_CLASSNAMES)}
                     type="text"
                     placeholder="Write your task..."
                     value={newTask}
                     onChange={(event) => setNewTask(event.target.value)}
                 />
                 <input
-                    className={twMerge(
-                        NEWTASKS_DEFAULT_CLASSNAMES,
-                        'w-32 mr-2'
-                    )}
+                    className={twMerge(NEWTASKS_DEFAULT_CLASSNAMES)}
                     type="text"
                     placeholder="Write your tag..."
                     value={newTag}
                     onChange={(event) => setNewTag(event.target.value)}
                 />
 
-                <button
-                    className={twMerge(NEWTASKS_DEFAULT_CLASSNAMES, 'mr-5 w-9')}
-                >
+                <button className="p-2 rounded font-semibold bg-[#7371fc] text-white hover:text-[#cdc1ff]">
                     Add
                 </button>
             </form>
 
             <button
-                className={twMerge(
-                    NEWTASKS_DEFAULT_CLASSNAMES,
-                    'bg-[#54edfe] dark:bg-[#65717b] text-[#172a3a] dark:text-[#54edfe] w-13 hover:bg-[#2e3f4e] hover:text-[#54edfe] dark:hover:bg-[#54edfe] dark:hover:text-[#172a3a]'
-                )}
+                className="p-2 rounded font-bold text-[#7371fc] hover:text-[#cdc1ff]"
                 onClick={() => onClearAllTasksButtonClick()}
             >
                 Clear all
