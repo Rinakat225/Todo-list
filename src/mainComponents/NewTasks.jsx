@@ -1,4 +1,5 @@
 import {twMerge} from 'tailwind-merge';
+import {DatePicker} from '../components/ui/datePicker';
 
 export default function NewTasks({
     newTask,
@@ -9,6 +10,8 @@ export default function NewTasks({
     newTag,
     setNewTag,
     handleShowTagButtonClick,
+    date,
+    setDate,
 }) {
     const handleSubmitUserInputButtonClick = (e) => {
         e.preventDefault();
@@ -35,7 +38,7 @@ export default function NewTasks({
     };
 
     const NEWTASKS_DEFAULT_CLASSNAMES =
-        'p-2 mr-2 font-bold rounded text-black dark:bg-[#525166] dark:text-black';
+        'p-2 mr-2 mt-2 mb-2 font-bold rounded text-black dark:bg-[#525166] dark:text-black';
 
     return (
         <div className="p-3 mt-3 mb-9 flex justify-center text-xs shadow-xl rounded">
@@ -54,6 +57,8 @@ export default function NewTasks({
                     value={newTag}
                     onChange={(event) => setNewTag(event.target.value)}
                 />
+
+                <DatePicker date={date} setDate={setDate} />
 
                 <button className="p-2 rounded font-semibold bg-[#7371fc] text-white hover:text-[#cdc1ff]">
                     Add

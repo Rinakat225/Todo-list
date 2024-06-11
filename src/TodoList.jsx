@@ -1,7 +1,7 @@
 import {useState} from 'react';
-import NewTasks from './components/NewTasks';
-import TaskList from './components/TaskList';
-import Tabs from './components/Tabs';
+import NewTasks from './mainComponents/NewTasks';
+import TaskList from './mainComponents/TaskList';
+import Tabs from './mainComponents/Tabs';
 import {LightBulbIcon} from '@heroicons/react/24/outline';
 
 export default function TodoList() {
@@ -14,6 +14,7 @@ export default function TodoList() {
     const [dark, setDark] = useState(false);
     const [newTag, setNewTag] = useState('');
     const [editedTag, setEditedTag] = useState('');
+    const [date, setDate] = useState();
 
     const handleDarkModeButtonClick = () => {
         setDark(!dark);
@@ -166,15 +167,15 @@ export default function TodoList() {
         );
     };
 
-    const currentDate = new Date();
-    const date = new Date(
-        new Date(currentDate).setDate(currentDate.getDate())
+    const todaysDate = new Date();
+    const currentDate = new Date(
+        new Date(todaysDate).setDate(todaysDate.getDate())
     ).toDateString();
 
     return (
         <div className="h-auto mx-auto max-w-6xl mt-2 rounded shadow-xl flex flex-col bg-WHITE dark:bg-[#272640]">
-            <div className="p-5 flex text-center items-center justify-between text-[#7371fc]">
-                <span className="text-md w-20">{date}</span>
+            <div className="p-5 flex text-center items-center justify-between shadow-xl text-[#7371fc]">
+                <span className="text-md w-20">{currentDate}</span>
                 <h1 className="text-4xl font-bold text-[#7371fc]">
                     To do List
                 </h1>
@@ -195,6 +196,8 @@ export default function TodoList() {
                     newTag={newTag}
                     setNewTag={setNewTag}
                     handleShowTagButtonClick={handleShowTagButtonClick}
+                    date={date}
+                    setDate={setDate}
                 />
                 {showTasks && (
                     <Tabs
