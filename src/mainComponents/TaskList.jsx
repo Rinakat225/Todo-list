@@ -21,6 +21,8 @@ export default function TaskList({
     editedTag,
     setEditedTag,
     onRemoveTagButtonClick,
+    date,
+    newDate,
 }) {
     const TASKLIST_DEFAULT_TEXT_CLASSNAMES =
         'p-5 rounded flex justify-between items-center shadow-xl text-base font-semibold text-black dark:text-[#cdc1ff]';
@@ -50,6 +52,8 @@ export default function TaskList({
                     editedTag={editedTag}
                     setEditedTag={setEditedTag}
                     onRemoveTagButtonClick={onRemoveTagButtonClick}
+                    date={date}
+                    newDate={newDate}
                 />
 
                 <Buttons

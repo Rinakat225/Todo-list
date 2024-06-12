@@ -14,7 +14,7 @@ export default function TodoList() {
     const [dark, setDark] = useState(false);
     const [newTag, setNewTag] = useState('');
     const [editedTag, setEditedTag] = useState('');
-    const [date, setDate] = useState();
+    const [date, setDate] = useState(null);
 
     const handleDarkModeButtonClick = () => {
         setDark(!dark);
@@ -29,6 +29,7 @@ export default function TodoList() {
         setNewTask('');
         setUserInput([]);
         setShowTasks(false);
+        setDate(null);
     };
 
     const handleRemoveTaskButtonClick = (id) => {
@@ -167,6 +168,19 @@ export default function TodoList() {
         );
     };
 
+    const handleAddDueDateButtonClick = (id) => {
+        setUserInput((tasks) =>
+            tasks.map((task) =>
+                task.id === id
+                    ? {
+                          ...task,
+                          taskDate: date,
+                      }
+                    : task
+            )
+        );
+    };
+
     const todaysDate = new Date();
     const currentDate = new Date(
         new Date(todaysDate).setDate(todaysDate.getDate())
@@ -195,9 +209,10 @@ export default function TodoList() {
                     }
                     newTag={newTag}
                     setNewTag={setNewTag}
-                    handleShowTagButtonClick={handleShowTagButtonClick}
+                    onShowTagButtonClick={handleShowTagButtonClick}
                     date={date}
                     setDate={setDate}
+                    onAddDueDateButtonClick={handleAddDueDateButtonClick}
                 />
                 {showTasks && (
                     <Tabs
@@ -213,6 +228,7 @@ export default function TodoList() {
                                 <TaskList
                                     userInput={input.newTask}
                                     tag={input.newTag}
+                                    newDate={input.taskDate}
                                     id={input.id}
                                     completed={input.completed}
                                     key={input.id}
@@ -246,6 +262,7 @@ export default function TodoList() {
                                     onRemoveTagButtonClick={
                                         handleRemoveTagButtonClick
                                     }
+                                    date={date}
                                 />
                             )
                         )}
