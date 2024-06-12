@@ -21,6 +21,8 @@ export default function Task({
     onRemoveTagButtonClick,
     date,
     newDate,
+    selectedTag,
+    completed,
 }) {
     const TASKLIST_EDIT_MODE_CLASSNAMES =
         'w-30 p-1.5 rounded shadow-inner bg-[#e9ecef] dark:bg-[#686779] dark:text-[#cdc1ff] text-black dark:text-black';
@@ -44,7 +46,8 @@ export default function Task({
                             <span>{format(newDate, 'PP')}</span>
                         </div>
                     )}
-                    {tag ? (
+                    {tag && <div>#{tag.label}</div>}
+                    {/* {tag ? (
                         <li>
                             #
                             {edit === id ? (
@@ -92,9 +95,21 @@ export default function Task({
                                 <MinusCircleIcon className="size-2 text-[#7371fc]" />
                             </span>
                         </button>
-                    )}
+                    )} */}
                 </div>
-                <li key={id}>
+                <li
+                    className={
+                        completed &&
+                        'text-[#65717b] dark:text-[#65717b] line-through decoration-[#65717b] decoration-2'
+                    }
+                    /* className={
+                        completed
+                            && 
+                                  'text-[#65717b] dark:text-[#65717b] line-through decoration-[#65717b] decoration-2'
+                              
+                    } */
+                    key={id}
+                >
                     {edit === id ? (
                         <input
                             className={TASKLIST_EDIT_MODE_CLASSNAMES}

@@ -1,5 +1,6 @@
 import {twMerge} from 'tailwind-merge';
 import {DatePicker} from '../components/ui/datePicker';
+import {ComboBoxResponsive} from '../components/ui/combobox';
 
 export default function NewTasks({
     newTask,
@@ -13,6 +14,10 @@ export default function NewTasks({
     date,
     setDate,
     onAddDueDateButtonClick,
+    selectedTag,
+    setSelectedTag,
+    customTags,
+    setCustomTags,
 }) {
     const handleSubmitUserInputButtonClick = (e) => {
         e.preventDefault();
@@ -23,8 +28,8 @@ export default function NewTasks({
             newTask,
             completed: false,
             id: Date.now(),
-            newTag,
-            tag: false,
+            selectedTag,
+            /*   tag: false, */
             taskDate: null,
         };
 
@@ -34,13 +39,15 @@ export default function NewTasks({
 
         onShowExistingTasksConditionally();
 
-        onShowTagButtonClick(task.id);
+        /*   onShowTagButtonClick(task.id); */
 
         setNewTag('');
 
         onAddDueDateButtonClick(task.id);
 
         setDate(null);
+
+        setSelectedTag(null);
     };
 
     const NEWTASKS_DEFAULT_CLASSNAMES =
@@ -54,24 +61,29 @@ export default function NewTasks({
             >
                 <div>
                     <input
-                        className={twMerge(NEWTASKS_DEFAULT_CLASSNAMES)}
+                        className={twMerge(NEWTASKS_DEFAULT_CLASSNAMES, 'w-80')}
                         type="text"
                         placeholder="Write your task..."
                         value={newTask}
                         onChange={(event) => setNewTask(event.target.value)}
                     />
-                    <input
-                        className={twMerge(NEWTASKS_DEFAULT_CLASSNAMES)}
-                        type="text"
-                        placeholder="Write your tag..."
-                        value={newTag}
-                        onChange={(event) => setNewTag(event.target.value)}
+                </div>
+
+                <div>
+                    <ComboBoxResponsive
+                        selectedTag={selectedTag}
+                        setSelectedTag={setSelectedTag}
+                        newTag={newTag}
+                        setNewTag={setNewTag}
+                        customTags={customTags}
+                        setCustomTags={setCustomTags}
                     />
                 </div>
 
                 <div>
-                    <DatePicker date={date} setDate={setDate} />{' '}
+                    <DatePicker date={date} setDate={setDate} />
                 </div>
+
                 <div>
                     <button className="p-2 rounded font-semibold bg-[#7371fc] text-white hover:text-[#cdc1ff]">
                         Add

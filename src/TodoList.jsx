@@ -15,6 +15,8 @@ export default function TodoList() {
     const [newTag, setNewTag] = useState('');
     const [editedTag, setEditedTag] = useState('');
     const [date, setDate] = useState(null);
+    const [selectedTag, setSelectedTag] = useState(null);
+    const [customTags, setCustomTags] = useState([]);
 
     const handleDarkModeButtonClick = () => {
         setDark(!dark);
@@ -30,6 +32,7 @@ export default function TodoList() {
         setUserInput([]);
         setShowTasks(false);
         setDate(null);
+        setSelectedTag(null);
     };
 
     const handleRemoveTaskButtonClick = (id) => {
@@ -139,7 +142,7 @@ export default function TodoList() {
         setUserInput(taskMovingDown);
     };
 
-    const handleShowTagButtonClick = (id) => {
+    /*    const handleShowTagButtonClick = (id) => {
         {
             newTag &&
                 setUserInput((tasks) =>
@@ -153,9 +156,9 @@ export default function TodoList() {
                     )
                 );
         }
-    };
+    }; */
 
-    const handleRemoveTagButtonClick = (id) => {
+    /*   const handleRemoveTagButtonClick = (id) => {
         setUserInput((tasks) =>
             tasks.map((task) =>
                 task.id === id
@@ -166,7 +169,7 @@ export default function TodoList() {
                     : task
             )
         );
-    };
+    }; */
 
     const handleAddDueDateButtonClick = (id) => {
         setUserInput((tasks) =>
@@ -209,10 +212,14 @@ export default function TodoList() {
                     }
                     newTag={newTag}
                     setNewTag={setNewTag}
-                    onShowTagButtonClick={handleShowTagButtonClick}
+                    /* onShowTagButtonClick={handleShowTagButtonClick} */
                     date={date}
                     setDate={setDate}
                     onAddDueDateButtonClick={handleAddDueDateButtonClick}
+                    selectedTag={selectedTag}
+                    setSelectedTag={setSelectedTag}
+                    customTags={customTags}
+                    setCustomTags={setCustomTags}
                 />
                 {showTasks && (
                     <Tabs
@@ -227,7 +234,7 @@ export default function TodoList() {
                             (input, index) => (
                                 <TaskList
                                     userInput={input.newTask}
-                                    tag={input.newTag}
+                                    tag={input.selectedTag}
                                     newDate={input.taskDate}
                                     id={input.id}
                                     completed={input.completed}
@@ -259,10 +266,11 @@ export default function TodoList() {
                                     }
                                     editedTag={editedTag}
                                     setEditedTag={setEditedTag}
-                                    onRemoveTagButtonClick={
+                                    /*  onRemoveTagButtonClick={
                                         handleRemoveTagButtonClick
-                                    }
+                                    } */
                                     date={date}
+                                    selectedTag={selectedTag}
                                 />
                             )
                         )}
