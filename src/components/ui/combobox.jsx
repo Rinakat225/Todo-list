@@ -134,7 +134,7 @@ function StatusList({
                     className="p-1 rounded text-xs bg-[#7371fc] text-white hover:text-[#cdc1ff]"
                     onClick={addCustomTag}
                 >
-                    Add Tag
+                    Add tag
                 </button>
             </div>
         </div>
