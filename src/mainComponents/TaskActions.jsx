@@ -3,7 +3,7 @@ import {TrashIcon} from '@heroicons/react/20/solid';
 import {PencilSquareIcon} from '@heroicons/react/20/solid';
 import {CheckIcon} from '@heroicons/react/20/solid';
 
-export default function Buttons({
+export default function TaskActions({
     id,
     edit,
     completed,
@@ -40,6 +40,7 @@ export default function Buttons({
                     </span>
                 </button>
             )}
+
             {edit === id ? (
                 <button
                     onClick={() => onSaveEditedTaskButtonClick(id)}

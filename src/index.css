@@ -74,3 +74,13 @@
         @apply bg-background text-foreground;
     }
 }
+
+html {
+    font-size: 14px;
+}
+
+html,
+body,
+#root {
+    @apply h-full;
+}
