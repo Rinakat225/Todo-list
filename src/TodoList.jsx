@@ -191,16 +191,18 @@ export default function TodoList() {
     ).toDateString();
 
     return (
-        <div className="h-auto mx-auto max-w-6xl mt-2 rounded shadow-xl flex flex-col bg-WHITE dark:bg-[#272640]">
-            <div className="p-5 flex text-center items-center justify-between shadow-xl text-[#7371fc]">
-                <span className="text-md w-20">{currentDate}</span>
-                <h1 className="text-4xl font-bold text-[#7371fc]">
+        <div className="h-full mx-auto rounded flex flex-col bg-gray-100 dark:bg-[#272640]">
+            <header className="flex text-center items-center justify-between text-[#7371fc]">
+                <span className="text-md w-20 py-4">{currentDate}</span>
+
+                <h1 className="text-4xl font-bold text-[#7371fc] py-4">
                     To do List
                 </h1>
+
                 <button onClick={() => handleDarkModeButtonClick()}>
-                    <LightBulbIcon className="size-6 w-20 text-[#7371fc] hover:text-[#cdc1ff] dark:hover:text-[#cdc1ff]" />
+                    <LightBulbIcon className="size-6 w-20 text-[#7371fc] hover:text-[#cdc1ff] dark:hover:text-[#cdc1ff] m-4" />
                 </button>
-            </div>
+            </header>
 
             <div className="self-center text-white">
                 <NewTasks
@@ -222,6 +224,7 @@ export default function TodoList() {
                     customTags={customTags}
                     setCustomTags={setCustomTags}
                 />
+
                 {showTasks && (
                     <Tabs
                         currentTab={currentTab}
@@ -230,7 +233,7 @@ export default function TodoList() {
                 )}
 
                 {showTasks && (
-                    <div className="mb-7">
+                    <div>
                         <Reorder.Group
                             axis="y"
                             values={userInput}

@@ -50,52 +50,42 @@ export default function NewTasks({
         setSelectedTag(null);
     };
 
-    const NEWTASKS_DEFAULT_CLASSNAMES =
-        'p-2 m-2 font-bold rounded text-black dark:bg-[#525166] dark:text-black';
-
     return (
-        <>
-            <form
-                className="p-3 mt-3 mb-9 flex items-center text-xs shadow-xl rounded"
-                onSubmit={handleSubmitUserInputButtonClick}
-            >
-                <div>
-                    <input
-                        className={twMerge(NEWTASKS_DEFAULT_CLASSNAMES, 'w-80')}
-                        type="text"
-                        placeholder="Write your task..."
-                        value={newTask}
-                        onChange={(event) => setNewTask(event.target.value)}
-                    />
-                </div>
+        <form
+            className="p-2 mt-3 mb-9 flex items-center bg-white text-xs shadow-md rounded"
+            onSubmit={handleSubmitUserInputButtonClick}
+        >
+            <input
+                className="p-2 m-2 font-bold rounded text-black dark:bg-[#525166] dark:text-black w-80"
+                type="text"
+                placeholder="Write your task..."
+                value={newTask}
+                onChange={(event) => setNewTask(event.target.value)}
+            />
 
-                <div>
-                    <ComboBoxResponsive
-                        selectedTag={selectedTag}
-                        setSelectedTag={setSelectedTag}
-                        newTag={newTag}
-                        setNewTag={setNewTag}
-                        customTags={customTags}
-                        setCustomTags={setCustomTags}
-                    />
-                </div>
+            <ComboBoxResponsive
+                selectedTag={selectedTag}
+                setSelectedTag={setSelectedTag}
+                newTag={newTag}
+                setNewTag={setNewTag}
+                customTags={customTags}
+                setCustomTags={setCustomTags}
+            />
 
-                <div>
-                    <DatePicker date={date} setDate={setDate} />
-                </div>
+            <DatePicker date={date} setDate={setDate} />
 
-                <div>
-                    <button className="p-2 rounded font-semibold bg-[#7371fc] text-white hover:text-[#cdc1ff]">
-                        Add
-                    </button>
-                    <button
-                        className="p-2 rounded font-bold text-[#7371fc] hover:text-[#cdc1ff]"
-                        onClick={() => onClearAllTasksButtonClick()}
-                    >
-                        Clear all
-                    </button>
-                </div>
-            </form>
-        </>
+            <div>
+                <button className="p-2 rounded font-semibold bg-[#7371fc] text-white hover:text-[#cdc1ff]">
+                    Add
+                </button>
+
+                <button
+                    className="p-2 rounded font-bold text-[#7371fc] hover:text-[#cdc1ff]"
+                    onClick={() => onClearAllTasksButtonClick()}
+                >
+                    Clear all
+                </button>
+            </div>
+        </form>
     );
 }
