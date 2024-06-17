@@ -21,22 +21,24 @@ export default function Task({
     newDate,
 }) {
     return (
-        <div className="flex justify-between gap-5 items-center p-5 bg-white rounded shadow-md text-base font-semibold text-black dark:text-[#cdc1ff]">
+        <div className="flex justify-between gap-5 mb-2 items-center p-5 bg-white dark:bg-[#525166] rounded shadow-md text-base font-semibold text-black dark:text-[#cdc1ff]">
             <MoveTaskUpAndDownButtons
                 index={index}
                 onMoveTaskUpButtonClick={onMoveTaskUpButtonClick}
                 onMoveTaskDownButtonClick={onMoveTaskDownButtonClick}
             />
-            <TaskContent
-                userInput={userInput}
-                id={id}
-                tag={tag}
-                taskInEditMode={taskInEditMode}
-                editedInput={editedInput}
-                setEditedInput={setEditedInput}
-                newDate={newDate}
-                taskCompleted={taskCompleted}
-            />
+            <fragment className="flex-1">
+                <TaskContent
+                    userInput={userInput}
+                    id={id}
+                    tag={tag}
+                    taskInEditMode={taskInEditMode}
+                    editedInput={editedInput}
+                    setEditedInput={setEditedInput}
+                    newDate={newDate}
+                    taskCompleted={taskCompleted}
+                />
+            </fragment>
 
             <TaskActions
                 id={id}

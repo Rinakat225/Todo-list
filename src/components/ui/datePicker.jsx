@@ -1,4 +1,3 @@
-import {useState} from 'react';
 import * as React from 'react';
 import {format} from 'date-fns';
 import {Calendar as CalendarIcon} from 'lucide-react';
@@ -20,12 +19,18 @@ export function DatePicker({date, setDate}) {
                     variant={'custom'}
                     size={'custom'}
                     className={cn(
-                        'w-35 justify-start text-left font-normal',
+                        'justify-start text-left font-normal',
                         !date && 'text-muted-foreground'
                     )}
                 >
-                    <CalendarIcon className="mr-1 h-4 w-4" />
-                    {date ? format(date, 'PP') : <span>Pick a date</span>}
+                    <CalendarIcon className="mr-1 h-4 w-4 group-hover:text-slate-400" />
+                    {date ? (
+                        format(date, 'PP')
+                    ) : (
+                        <span className="text-black group-hover:text-slate-400 dark:text-white dark:group-hover:text-slate-500">
+                            Pick a date
+                        </span>
+                    )}
                 </Button>
             </PopoverTrigger>
             <PopoverContent className="w-auto p-0">

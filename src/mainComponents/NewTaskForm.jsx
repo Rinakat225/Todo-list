@@ -1,4 +1,3 @@
-import {twMerge} from 'tailwind-merge';
 import {DatePicker} from '../components/ui/datePicker';
 import {ComboBoxResponsive} from '../components/ui/combobox';
 
@@ -17,6 +16,7 @@ export default function NewTaskForm({
     setSelectedTag,
     customTagsList,
     setCustomTagsList,
+    showTasks,
 }) {
     const handleSubmitUserInputButtonClick = (e) => {
         e.preventDefault();
@@ -47,38 +47,44 @@ export default function NewTaskForm({
     };
 
     return (
-        <form
-            className="p-2 mt-3 mb-9 flex items-center bg-white text-xs shadow-md rounded"
-            onSubmit={handleSubmitUserInputButtonClick}
-        >
-            <input
-                className="p-2 m-2 font-bold rounded text-black dark:bg-[#525166] dark:text-black w-80"
-                type="text"
-                placeholder="Write your task..."
-                value={newTask}
-                onChange={(event) => setNewTask(event.target.value)}
-            />
+        <fragment className="text-xs shadow-md rounded flex items-center h-auto p-2 mt-3 mb-9 bg-white dark:bg-[#525166]">
+            <form
+                className="flex items-center"
+                onSubmit={handleSubmitUserInputButtonClick}
+            >
+                <input
+                    className="h-8 p-2 m-2 font-normal rounded text-black dark:bg-[#525166] dark:text-black w-auto"
+                    type="text"
+                    placeholder="Write your task..."
+                    value={newTask}
+                    onChange={(event) => setNewTask(event.target.value)}
+                />
 
-            <ComboBoxResponsive
-                selectedTag={selectedTag}
-                setSelectedTag={setSelectedTag}
-                customTag={customTag}
-                setCustomTag={setCustomTag}
-                customTagsList={customTagsList}
-                setCustomTagsList={setCustomTagsList}
-            />
+                <ComboBoxResponsive
+                    selectedTag={selectedTag}
+                    setSelectedTag={setSelectedTag}
+                    customTag={customTag}
+                    setCustomTag={setCustomTag}
+                    customTagsList={customTagsList}
+                    setCustomTagsList={setCustomTagsList}
+                />
 
-            <DatePicker date={date} setDate={setDate} />
+                <DatePicker date={date} setDate={setDate} />
 
-            <button className="p-2 rounded font-semibold bg-[#7371fc] text-white hover:text-[#cdc1ff]">
-                Add
-            </button>
+                <button className="h-8 m-2 p-2 rounded font-semibold bg-[#7371fc] text-white hover:text-[#cdc1ff]">
+                    Add
+                </button>
+            </form>
             <button
-                className="p-2 rounded font-bold text-[#7371fc] hover:text-[#cdc1ff]"
+                className={
+                    !showTasks
+                        ? 'h-8 p-2 rounded font-normal text-[#cdc1ff]'
+                        : 'font-semibold text-[#7371fc] hover:text-[#cdc1ff]'
+                }
                 onClick={() => onClearAllTasksButtonClick()}
             >
                 Clear all
             </button>
-        </form>
+        </fragment>
     );
 }

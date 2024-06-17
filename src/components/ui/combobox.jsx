@@ -53,10 +53,7 @@ export function ComboBoxResponsive({
     return (
         <Popover open={open} onOpenChange={setOpen}>
             <PopoverTrigger asChild>
-                <Button
-                    variant="custom"
-                    className="w-35 h-8 justify-start text-black"
-                >
+                <Button variant="custom" size="custom">
                     {selectedTag ? <>{selectedTag.label}</> : <>+ Add tag</>}
                 </Button>
             </PopoverTrigger>
@@ -105,9 +102,9 @@ function StatusList({
     return (
         <div>
             <Command>
-                <CommandInput placeholder="Filter status..." />
+                <CommandInput placeholder="Find tag..." />
                 <CommandList>
-                    <CommandEmpty>No results found.</CommandEmpty>
+                    <CommandEmpty>No tags found...</CommandEmpty>
                     <CommandGroup>
                         {[...tags, ...customTagsList].map((tag) => (
                             <CommandItem
@@ -126,9 +123,9 @@ function StatusList({
             </Command>
             <div className="flex flex-col gap-2 p-3 m-0.5 w-25">
                 <input
-                    className="p-2 shadow-xl text-xs"
+                    className="p-2 shadow-md text-sm"
                     type="text"
-                    placeholder="Add a custom tag..."
+                    placeholder="Write a custom tag..."
                     value={customTag}
                     onChange={(event) => setCustomTag(event.target.value)}
                 />
