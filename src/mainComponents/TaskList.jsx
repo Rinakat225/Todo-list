@@ -18,18 +18,16 @@ export default function TaskList({
     index,
     onMoveTaskUpButtonClick,
     onMoveTaskDownButtonClick,
-    editedTag,
-    setEditedTag,
-    onRemoveTagButtonClick,
+    g,
     date,
     newDate,
     selectedTag,
 }) {
     const TASKLIST_DEFAULT_TEXT_CLASSNAMES =
-        'p-5 rounded flex justify-between items-center shadow-xl text-base font-semibold text-black dark:text-[#cdc1ff]';
+        'p-5 rounded flex justify-between items-center shadow-xl text-base font-semibold text-black dark:text-[#cdc1ff] bg-[#fcfcfc]';
 
     return (
-        <div className="flex flex-col justify-center cursor-grab">
+        <div className="flex flex-col justify-center cursor-grab mb-1">
             <div className={TASKLIST_DEFAULT_TEXT_CLASSNAMES}>
                 <Task
                     userInput={userInput}
@@ -41,9 +39,6 @@ export default function TaskList({
                     index={index}
                     onMoveTaskUpButtonClick={onMoveTaskUpButtonClick}
                     onMoveTaskDownButtonClick={onMoveTaskDownButtonClick}
-                    editedTag={editedTag}
-                    setEditedTag={setEditedTag}
-                    onRemoveTagButtonClick={onRemoveTagButtonClick}
                     date={date}
                     newDate={newDate}
                     selectedTag={selectedTag}

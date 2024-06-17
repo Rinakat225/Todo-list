@@ -10,7 +10,6 @@ export default function NewTasks({
     onShowExistingTasksConditionally,
     newTag,
     setNewTag,
-    onShowTagButtonClick,
     date,
     setDate,
     onAddDueDateButtonClick,
@@ -29,7 +28,6 @@ export default function NewTasks({
             completed: false,
             id: Date.now(),
             selectedTag,
-            /*   tag: false, */
             taskDate: null,
         };
 
@@ -38,8 +36,6 @@ export default function NewTasks({
         setNewTask('');
 
         onShowExistingTasksConditionally();
-
-        /*   onShowTagButtonClick(task.id); */
 
         setNewTag('');
 

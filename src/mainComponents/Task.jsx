@@ -16,9 +16,6 @@ export default function Task({
     index,
     onMoveTaskUpButtonClick,
     onMoveTaskDownButtonClick,
-    editedTag,
-    setEditedTag,
-    onRemoveTagButtonClick,
     date,
     newDate,
     selectedTag,
@@ -47,67 +44,12 @@ export default function Task({
                         </div>
                     )}
                     {tag && <div>#{tag.label}</div>}
-                    {/* {tag ? (
-                        <li>
-                            #
-                            {edit === id ? (
-                                <input
-                                    className={twMerge(
-                                        TASKLIST_EDIT_MODE_CLASSNAMES,
-                                        'w-16'
-                                    )}
-                                    type="text"
-                                    defaultValue={tag}
-                                    value={editedTag}
-                                    onChange={(event) =>
-                                        setEditedTag(event.target.value)
-                                    }
-                                />
-                            ) : (
-                                tag
-                            )}
-                        </li>
-                    ) : (
-                        <li>
-                            {edit === id && (
-                                <input
-                                    className={twMerge(
-                                        TASKLIST_EDIT_MODE_CLASSNAMES,
-                                        'w-16 text-xs'
-                                    )}
-                                    type="text"
-                                    placeholder="add tag..."
-                                    value={editedTag}
-                                    onChange={(event) =>
-                                        setEditedTag(event.target.value)
-                                    }
-                                />
-                            )}
-                        </li>
-                    )}
-
-                    {tag && (
-                        <button
-                            onClick={() => onRemoveTagButtonClick(id)}
-                            className="rounded h-4 w-4"
-                        >
-                            <span>
-                                <MinusCircleIcon className="size-2 text-[#7371fc]" />
-                            </span>
-                        </button>
-                    )} */}
                 </div>
                 <li
                     className={
                         completed &&
                         'text-[#65717b] dark:text-[#65717b] line-through decoration-[#65717b] decoration-2'
                     }
-                    /* className={
-                        completed
-                            && 
-                                  'text-[#65717b] dark:text-[#65717b] line-through decoration-[#65717b] decoration-2'
-                              
-                    } */
                     key={id}
                 >
                     {edit === id ? (

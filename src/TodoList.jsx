@@ -14,7 +14,6 @@ export default function TodoList() {
     const [currentTab, setCurrentTab] = useState('all');
     const [dark, setDark] = useState(false);
     const [newTag, setNewTag] = useState('');
-    const [editedTag, setEditedTag] = useState('');
     const [date, setDate] = useState(null);
     const [selectedTag, setSelectedTag] = useState(null);
     const [customTags, setCustomTags] = useState([]);
@@ -49,45 +48,21 @@ export default function TodoList() {
     const handleEditTaskButtonClick = (id) => {
         setEdit(id);
         setEditedInput(userInput.id);
-        setEditedTag(userInput.id);
+    };
+
+    const handleSaveEditedTaskButtonClick = (id) => {
         {
-            !newTag &&
+            editedInput &&
                 setUserInput((tasks) =>
                     tasks.map((task) =>
                         task.id === id
                             ? {
                                   ...task,
-                                  tag: !task.tag,
+                                  newTask: editedInput,
                               }
                             : task
                     )
                 );
-        }
-    };
-
-    const handleSaveEditedTaskButtonClick = (id) => {
-        if (editedInput) {
-            setUserInput((tasks) =>
-                tasks.map((task) =>
-                    task.id === id
-                        ? {
-                              ...task,
-                              newTask: editedInput,
-                          }
-                        : task
-                )
-            );
-        } else if (editedTag) {
-            setUserInput((tasks) =>
-                tasks.map((task) =>
-                    task.id === id
-                        ? {
-                              ...task,
-                              newTag: editedTag,
-                          }
-                        : task
-                )
-            );
         }
         setEdit(null);
     };
@@ -95,7 +70,6 @@ export default function TodoList() {
     const handleCancelEditingModeButtonClick = () => {
         setEdit(null);
         setEditedInput('');
-        setEditedTag('');
     };
 
     const handleMarkTaskCompletedButtonClick = (id) => {
@@ -143,35 +117,6 @@ export default function TodoList() {
         setUserInput(taskMovingDown);
     };
 
-    /*    const handleShowTagButtonClick = (id) => {
-        {
-            newTag &&
-                setUserInput((tasks) =>
-                    tasks.map((task) =>
-                        task.id === id
-                            ? {
-                                  ...task,
-                                  tag: !task.tag,
-                              }
-                            : task
-                    )
-                );
-        }
-    }; */
-
-    /*   const handleRemoveTagButtonClick = (id) => {
-        setUserInput((tasks) =>
-            tasks.map((task) =>
-                task.id === id
-                    ? {
-                          ...task,
-                          newTag: '',
-                      }
-                    : task
-            )
-        );
-    }; */
-
     const handleAddDueDateButtonClick = (id) => {
         setUserInput((tasks) =>
             tasks.map((task) =>
@@ -213,7 +158,6 @@ export default function TodoList() {
                     }
                     newTag={newTag}
                     setNewTag={setNewTag}
-                    /* onShowTagButtonClick={handleShowTagButtonClick} */
                     date={date}
                     setDate={setDate}
                     onAddDueDateButtonClick={handleAddDueDateButtonClick}
@@ -271,11 +215,6 @@ export default function TodoList() {
                                             onMoveTaskDownButtonClick={
                                                 handleMoveTaskDownButtonClick
                                             }
-                                            editedTag={editedTag}
-                                            setEditedTag={setEditedTag}
-                                            /*  onRemoveTagButtonClick={
-                                        handleRemoveTagButtonClick
-                                    } */
                                             date={date}
                                             selectedTag={selectedTag}
                                         />
