@@ -1,6 +1,6 @@
 import {useState} from 'react';
-import NewTasks from './mainComponents/NewTasks';
-import TaskList from './mainComponents/TaskList';
+import NewTaskForm from './mainComponents/NewTaskForm';
+import Task from './mainComponents/Task';
 import Tabs from './mainComponents/Tabs';
 import {LightBulbIcon} from '@heroicons/react/24/outline';
 import {Reorder} from 'framer-motion';
@@ -9,14 +9,14 @@ export default function TodoList() {
     const [newTask, setNewTask] = useState('');
     const [userInput, setUserInput] = useState([]);
     const [showTasks, setShowTasks] = useState(false);
-    const [edit, setEdit] = useState(null);
+    const [taskInEditMode, setTaskInEditMode] = useState(null);
     const [editedInput, setEditedInput] = useState('');
     const [currentTab, setCurrentTab] = useState('all');
     const [dark, setDark] = useState(false);
-    const [newTag, setNewTag] = useState('');
+    const [customTag, setCustomTag] = useState('');
     const [date, setDate] = useState(null);
     const [selectedTag, setSelectedTag] = useState(null);
-    const [customTags, setCustomTags] = useState([]);
+    const [customTagsList, setCustomTagsList] = useState([]);
 
     const handleDarkModeButtonClick = () => {
         setDark(!dark);
@@ -46,7 +46,7 @@ export default function TodoList() {
     };
 
     const handleEditTaskButtonClick = (id) => {
-        setEdit(id);
+        setTaskInEditMode(id);
         setEditedInput(userInput.id);
     };
 
@@ -64,11 +64,11 @@ export default function TodoList() {
                     )
                 );
         }
-        setEdit(null);
+        setTaskInEditMode(null);
     };
 
     const handleCancelEditingModeButtonClick = () => {
-        setEdit(null);
+        setTaskInEditMode(null);
         setEditedInput('');
     };
 
@@ -77,19 +77,21 @@ export default function TodoList() {
             tasks
                 .map((task) =>
                     task.id === id
-                        ? {...task, completed: !task.completed}
+                        ? {...task, taskCompleted: !task.taskCompleted}
                         : task
                 )
                 .slice()
-                .sort((a, b) => Number(a.completed) - Number(b.completed))
+                .sort(
+                    (a, b) => Number(a.taskCompleted) - Number(b.taskCompleted)
+                )
         );
     };
 
     const handleFilterExistingTasksConditionally = () => {
         if (currentTab === 'completed') {
-            return userInput.filter((task) => task.completed);
+            return userInput.filter((task) => task.taskCompleted);
         } else if (currentTab === 'inProgress') {
-            return userInput.filter((task) => !task.completed);
+            return userInput.filter((task) => !task.taskCompleted);
         } else {
             return userInput;
         }
@@ -136,19 +138,19 @@ export default function TodoList() {
     ).toDateString();
 
     return (
-        <div className="h-auto mx-auto max-w-6xl mt-2 rounded shadow-xl flex flex-col bg-WHITE dark:bg-[#272640]">
-            <div className="p-5 flex text-center items-center justify-between shadow-xl text-[#7371fc]">
-                <span className="text-md w-20">{currentDate}</span>
-                <h1 className="text-4xl font-bold text-[#7371fc]">
+        <div className="h-full mx-auto rounded flex flex-col bg-gray-100 dark:bg-[#272640]">
+            <header className="flex text-center items-center justify-between text-[#7371fc]">
+                <span className="text-md w-20 py-4">{currentDate}</span>
+                <h1 className="text-4xl font-bold text-[#7371fc] py-4">
                     To do List
                 </h1>
                 <button onClick={() => handleDarkModeButtonClick()}>
-                    <LightBulbIcon className="size-6 w-20 text-[#7371fc] hover:text-[#cdc1ff] dark:hover:text-[#cdc1ff]" />
+                    <LightBulbIcon className="size-6 w-20 text-[#7371fc] hover:text-[#cdc1ff] dark:hover:text-[#cdc1ff] m-4" />
                 </button>
-            </div>
+            </header>
 
-            <div className="self-center text-white">
-                <NewTasks
+            <main className="self-center text-white">
+                <NewTaskForm
                     newTask={newTask}
                     setNewTask={setNewTask}
                     onAddNewTaskButtonClick={handleAddNewTaskButtonClick}
@@ -156,15 +158,15 @@ export default function TodoList() {
                     onShowExistingTasksConditionally={
                         handleShowExistingTasksConditionally
                     }
-                    newTag={newTag}
-                    setNewTag={setNewTag}
+                    customTag={customTag}
+                    setCustomTag={setCustomTag}
                     date={date}
                     setDate={setDate}
                     onAddDueDateButtonClick={handleAddDueDateButtonClick}
                     selectedTag={selectedTag}
                     setSelectedTag={setSelectedTag}
-                    customTags={customTags}
-                    setCustomTags={setCustomTags}
+                    customTagsList={customTagsList}
+                    setCustomTagsList={setCustomTagsList}
                 />
                 {showTasks && (
                     <Tabs
@@ -174,57 +176,55 @@ export default function TodoList() {
                 )}
 
                 {showTasks && (
-                    <div className="mb-7">
-                        <Reorder.Group
-                            axis="y"
-                            values={userInput}
-                            onReorder={setUserInput}
-                        >
-                            {handleFilterExistingTasksConditionally().map(
-                                (input, index) => (
-                                    <Reorder.Item value={input} key={input.id}>
-                                        <TaskList
-                                            userInput={input.newTask}
-                                            tag={input.selectedTag}
-                                            newDate={input.taskDate}
-                                            id={input.id}
-                                            completed={input.completed}
-                                            key={input.id}
-                                            onRemoveTaskButtonClick={
-                                                handleRemoveTaskButtonClick
-                                            }
-                                            edit={edit}
-                                            onEditTaskButtonClick={
-                                                handleEditTaskButtonClick
-                                            }
-                                            editedInput={editedInput}
-                                            setEditedInput={setEditedInput}
-                                            onSaveEditedTaskButtonClick={
-                                                handleSaveEditedTaskButtonClick
-                                            }
-                                            onCancelEditingModeButtonClick={
-                                                handleCancelEditingModeButtonClick
-                                            }
-                                            onMarkTaskCompletedButtonClick={
-                                                handleMarkTaskCompletedButtonClick
-                                            }
-                                            index={index}
-                                            onMoveTaskUpButtonClick={
-                                                handleMoveTaskUpButtonClick
-                                            }
-                                            onMoveTaskDownButtonClick={
-                                                handleMoveTaskDownButtonClick
-                                            }
-                                            date={date}
-                                            selectedTag={selectedTag}
-                                        />
-                                    </Reorder.Item>
-                                )
-                            )}
-                        </Reorder.Group>
-                    </div>
+                    <Reorder.Group
+                        axis="y"
+                        values={userInput}
+                        onReorder={setUserInput}
+                    >
+                        {handleFilterExistingTasksConditionally().map(
+                            (input, index) => (
+                                <Reorder.Item value={input} key={input.id}>
+                                    <Task
+                                        userInput={input.newTask}
+                                        tag={input.selectedTag}
+                                        newDate={input.taskDate}
+                                        id={input.id}
+                                        taskCompleted={input.taskCompleted}
+                                        key={input.id}
+                                        onRemoveTaskButtonClick={
+                                            handleRemoveTaskButtonClick
+                                        }
+                                        taskInEditMode={taskInEditMode}
+                                        onEditTaskButtonClick={
+                                            handleEditTaskButtonClick
+                                        }
+                                        editedInput={editedInput}
+                                        setEditedInput={setEditedInput}
+                                        onSaveEditedTaskButtonClick={
+                                            handleSaveEditedTaskButtonClick
+                                        }
+                                        onCancelEditingModeButtonClick={
+                                            handleCancelEditingModeButtonClick
+                                        }
+                                        onMarkTaskCompletedButtonClick={
+                                            handleMarkTaskCompletedButtonClick
+                                        }
+                                        index={index}
+                                        onMoveTaskUpButtonClick={
+                                            handleMoveTaskUpButtonClick
+                                        }
+                                        onMoveTaskDownButtonClick={
+                                            handleMoveTaskDownButtonClick
+                                        }
+                                        date={date}
+                                        selectedTag={selectedTag}
+                                    />
+                                </Reorder.Item>
+                            )
+                        )}
+                    </Reorder.Group>
                 )}
-            </div>
+            </main>
         </div>
     );
 }

@@ -3,10 +3,10 @@ import {TrashIcon} from '@heroicons/react/20/solid';
 import {PencilSquareIcon} from '@heroicons/react/20/solid';
 import {CheckIcon} from '@heroicons/react/20/solid';
 
-export default function Buttons({
+export default function TaskActions({
     id,
-    edit,
-    completed,
+    taskInEditMode,
+    taskCompleted,
     onRemoveTaskButtonClick,
     onEditTaskButtonClick,
     onSaveEditedTaskButtonClick,
@@ -21,7 +21,7 @@ export default function Buttons({
 
     return (
         <div className="flex gap-1">
-            {edit === id ? (
+            {taskInEditMode === id ? (
                 <button
                     onClick={() => onCancelEditingModeButtonClick()}
                     className={TASKLIST_BTN_CLASSNAMES}
@@ -40,7 +40,7 @@ export default function Buttons({
                     </span>
                 </button>
             )}
-            {edit === id ? (
+            {taskInEditMode === id ? (
                 <button
                     onClick={() => onSaveEditedTaskButtonClick(id)}
                     className={TASKLIST_BTN_CLASSNAMES}
@@ -62,11 +62,13 @@ export default function Buttons({
                 </button>
             )}
 
-            {completed ? (
+            {taskCompleted ? (
                 <button
                     onClick={() => onMarkTaskCompletedButtonClick(id)}
                     className={
-                        edit !== id ? `${TASKLIST_BTN_CLASSNAMES}` : 'hidden'
+                        taskInEditMode !== id
+                            ? `${TASKLIST_BTN_CLASSNAMES}`
+                            : 'hidden'
                     }
                 >
                     <span>
@@ -77,7 +79,9 @@ export default function Buttons({
                 <button
                     onClick={() => onMarkTaskCompletedButtonClick(id)}
                     className={
-                        edit !== id ? `${TASKLIST_BTN_CLASSNAMES}` : 'hidden'
+                        taskInEditMode !== id
+                            ? `${TASKLIST_BTN_CLASSNAMES}`
+                            : 'hidden'
                     }
                 >
                     <span>
