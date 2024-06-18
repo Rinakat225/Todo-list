@@ -43,20 +43,17 @@ const tags = [
 export function ComboBoxResponsive({
     selectedTag,
     setSelectedTag,
-    newTag,
-    setNewTag,
-    customTags,
-    setCustomTags,
+    customTag,
+    setCustomTag,
+    customTagsList,
+    setCustomTagsList,
 }) {
     const [open, setOpen] = useState(false);
 
     return (
         <Popover open={open} onOpenChange={setOpen}>
             <PopoverTrigger asChild>
-                <Button
-                    variant="custom"
-                    className="w-35 h-8 justify-start text-black"
-                >
+                <Button variant="custom" size="custom">
                     {selectedTag ? <>{selectedTag.label}</> : <>+ Add tag</>}
                 </Button>
             </PopoverTrigger>
@@ -64,10 +61,10 @@ export function ComboBoxResponsive({
                 <StatusList
                     setOpen={setOpen}
                     setSelectedTag={setSelectedTag}
-                    newTag={newTag}
-                    setNewTag={setNewTag}
-                    customTags={customTags}
-                    setCustomTags={setCustomTags}
+                    customTag={customTag}
+                    setCustomTag={setCustomTag}
+                    customTagsList={customTagsList}
+                    setCustomTagsList={setCustomTagsList}
                 />
             </PopoverContent>
         </Popover>
@@ -77,25 +74,27 @@ export function ComboBoxResponsive({
 function StatusList({
     setOpen,
     setSelectedTag,
-    newTag,
-    setNewTag,
-    customTags,
-    setCustomTags,
+    customTag,
+    setCustomTag,
+    customTagsList,
+    setCustomTagsList,
 }) {
-    const addCustomTag = () => {
-        if (newTag.trim() === '') return;
+    const addNewCustomTag = () => {
+        if (customTag.trim() === '') return;
 
-        const customTag = {
-            value: newTag.toLowerCase().replace(/\s+/g, '_'),
-            label: newTag,
+        const newCustomTag = {
+            value: customTag.toLowerCase().replace(/\s+/g, '_'),
+            label: customTag,
         };
 
-        setCustomTags([...customTags, customTag]);
-        setNewTag('');
+        setCustomTagsList([...customTagsList, newCustomTag]);
+        setCustomTag('');
     };
 
     const handleSelectTag = (value) => {
-        const tag = [...tags, ...customTags].find((tag) => tag.value === value);
+        const tag = [...tags, ...customTagsList].find(
+            (tag) => tag.value === value
+        );
         setSelectedTag(tag || null);
         setOpen(false);
     };
@@ -103,11 +102,11 @@ function StatusList({
     return (
         <div>
             <Command>
-                <CommandInput placeholder="Filter status..." />
+                <CommandInput placeholder="Find tag..." />
                 <CommandList>
-                    <CommandEmpty>No results found.</CommandEmpty>
+                    <CommandEmpty>No tags found...</CommandEmpty>
                     <CommandGroup>
-                        {[...tags, ...customTags].map((tag) => (
+                        {[...tags, ...customTagsList].map((tag) => (
                             <CommandItem
                                 key={tag.value}
                                 value={tag.value}
@@ -124,15 +123,15 @@ function StatusList({
             </Command>
             <div className="flex flex-col gap-2 p-3 m-0.5 w-25">
                 <input
-                    className="p-2 shadow-xl text-xs"
+                    className="p-2 shadow-md text-sm"
                     type="text"
-                    placeholder="Add a custom tag..."
-                    value={newTag}
-                    onChange={(event) => setNewTag(event.target.value)}
+                    placeholder="Write a custom tag..."
+                    value={customTag}
+                    onChange={(event) => setCustomTag(event.target.value)}
                 />
                 <button
                     className="p-1 rounded text-xs bg-[#7371fc] text-white hover:text-[#cdc1ff]"
-                    onClick={addCustomTag}
+                    onClick={addNewCustomTag}
                 >
                     Add tag
                 </button>

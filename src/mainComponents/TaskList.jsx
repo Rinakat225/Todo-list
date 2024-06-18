@@ -1,70 +1,75 @@
 import Task from './Task';
-import Buttons from './Buttons';
-import {twMerge} from 'tailwind-merge';
+import {Reorder} from 'framer-motion';
 
 export default function TaskList({
+    showTasks,
     userInput,
-    tag,
-    id,
-    completed,
+    setUserInput,
+    date,
+    onFilterExistingTasksConditionally,
     onRemoveTaskButtonClick,
-    edit,
+    taskInEditMode,
     onEditTaskButtonClick,
     editedInput,
     setEditedInput,
     onSaveEditedTaskButtonClick,
     onCancelEditingModeButtonClick,
     onMarkTaskCompletedButtonClick,
-    index,
     onMoveTaskUpButtonClick,
     onMoveTaskDownButtonClick,
-    editedTag,
-    setEditedTag,
-    onRemoveTagButtonClick,
-    date,
-    newDate,
     selectedTag,
 }) {
-    const TASKLIST_DEFAULT_TEXT_CLASSNAMES =
-        'p-5 rounded flex justify-between items-center shadow-xl text-base font-semibold text-black dark:text-[#cdc1ff]';
-
     return (
-        <div className="flex flex-col justify-center cursor-grab">
-            <div className={TASKLIST_DEFAULT_TEXT_CLASSNAMES}>
-                <Task
-                    userInput={userInput}
-                    id={id}
-                    tag={tag}
-                    edit={edit}
-                    editedInput={editedInput}
-                    setEditedInput={setEditedInput}
-                    index={index}
-                    onMoveTaskUpButtonClick={onMoveTaskUpButtonClick}
-                    onMoveTaskDownButtonClick={onMoveTaskDownButtonClick}
-                    editedTag={editedTag}
-                    setEditedTag={setEditedTag}
-                    onRemoveTagButtonClick={onRemoveTagButtonClick}
-                    date={date}
-                    newDate={newDate}
-                    selectedTag={selectedTag}
-                    completed={completed}
-                />
-
-                <Buttons
-                    id={id}
-                    edit={edit}
-                    completed={completed}
-                    onRemoveTaskButtonClick={onRemoveTaskButtonClick}
-                    onEditTaskButtonClick={onEditTaskButtonClick}
-                    onSaveEditedTaskButtonClick={onSaveEditedTaskButtonClick}
-                    onCancelEditingModeButtonClick={
-                        onCancelEditingModeButtonClick
-                    }
-                    onMarkTaskCompletedButtonClick={
-                        onMarkTaskCompletedButtonClick
-                    }
-                />
-            </div>
-        </div>
+        <>
+            {showTasks && (
+                <Reorder.Group
+                    axis="y"
+                    values={userInput}
+                    onReorder={setUserInput}
+                >
+                    {onFilterExistingTasksConditionally().map(
+                        (input, index) => (
+                            <Reorder.Item value={input} key={input.id}>
+                                <Task
+                                    userInput={input.newTask}
+                                    tag={input.selectedTag}
+                                    newDate={input.taskDate}
+                                    id={input.id}
+                                    taskCompleted={input.taskCompleted}
+                                    key={input.id}
+                                    onRemoveTaskButtonClick={
+                                        onRemoveTaskButtonClick
+                                    }
+                                    taskInEditMode={taskInEditMode}
+                                    onEditTaskButtonClick={
+                                        onEditTaskButtonClick
+                                    }
+                                    editedInput={editedInput}
+                                    setEditedInput={setEditedInput}
+                                    onSaveEditedTaskButtonClick={
+                                        onSaveEditedTaskButtonClick
+                                    }
+                                    onCancelEditingModeButtonClick={
+                                        onCancelEditingModeButtonClick
+                                    }
+                                    onMarkTaskCompletedButtonClick={
+                                        onMarkTaskCompletedButtonClick
+                                    }
+                                    index={index}
+                                    onMoveTaskUpButtonClick={
+                                        onMoveTaskUpButtonClick
+                                    }
+                                    onMoveTaskDownButtonClick={
+                                        onMoveTaskDownButtonClick
+                                    }
+                                    date={date}
+                                    selectedTag={selectedTag}
+                                />
+                            </Reorder.Item>
+                        )
+                    )}
+                </Reorder.Group>
+            )}
+        </>
     );
 }

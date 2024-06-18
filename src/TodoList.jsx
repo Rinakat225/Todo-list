@@ -1,26 +1,25 @@
 import {useState} from 'react';
-import NewTasks from './mainComponents/NewTasks';
-import TaskList from './mainComponents/TaskList';
+import NewTaskForm from './mainComponents/NewTaskForm';
 import Tabs from './mainComponents/Tabs';
+import Tasklist from './mainComponents/TaskList';
 import {LightBulbIcon} from '@heroicons/react/24/outline';
-import {Reorder} from 'framer-motion';
+import {format} from 'date-fns';
 
 export default function TodoList() {
     const [newTask, setNewTask] = useState('');
     const [userInput, setUserInput] = useState([]);
     const [showTasks, setShowTasks] = useState(false);
-    const [edit, setEdit] = useState(null);
+    const [taskInEditMode, setTaskInEditMode] = useState(null);
     const [editedInput, setEditedInput] = useState('');
     const [currentTab, setCurrentTab] = useState('all');
-    const [dark, setDark] = useState(false);
-    const [newTag, setNewTag] = useState('');
-    const [editedTag, setEditedTag] = useState('');
+    const [darkModeOn, setDarkModeOn] = useState(false);
+    const [customTag, setCustomTag] = useState('');
     const [date, setDate] = useState(null);
     const [selectedTag, setSelectedTag] = useState(null);
-    const [customTags, setCustomTags] = useState([]);
+    const [customTagsList, setCustomTagsList] = useState([]);
 
     const handleDarkModeButtonClick = () => {
-        setDark(!dark);
+        setDarkModeOn(!darkModeOn);
         document.body.classList.toggle('dark');
     };
 
@@ -29,6 +28,8 @@ export default function TodoList() {
     };
 
     const handleClearAllTasksButtonClick = () => {
+        if (!showTasks) return;
+
         setNewTask('');
         setUserInput([]);
         setShowTasks(false);
@@ -47,55 +48,30 @@ export default function TodoList() {
     };
 
     const handleEditTaskButtonClick = (id) => {
-        setEdit(id);
+        setTaskInEditMode(id);
         setEditedInput(userInput.id);
-        setEditedTag(userInput.id);
+    };
+
+    const handleSaveEditedTaskButtonClick = (id) => {
         {
-            !newTag &&
+            editedInput &&
                 setUserInput((tasks) =>
                     tasks.map((task) =>
                         task.id === id
                             ? {
                                   ...task,
-                                  tag: !task.tag,
+                                  newTask: editedInput,
                               }
                             : task
                     )
                 );
         }
-    };
-
-    const handleSaveEditedTaskButtonClick = (id) => {
-        if (editedInput) {
-            setUserInput((tasks) =>
-                tasks.map((task) =>
-                    task.id === id
-                        ? {
-                              ...task,
-                              newTask: editedInput,
-                          }
-                        : task
-                )
-            );
-        } else if (editedTag) {
-            setUserInput((tasks) =>
-                tasks.map((task) =>
-                    task.id === id
-                        ? {
-                              ...task,
-                              newTag: editedTag,
-                          }
-                        : task
-                )
-            );
-        }
-        setEdit(null);
+        setTaskInEditMode(null);
     };
 
     const handleCancelEditingModeButtonClick = () => {
-        setEdit(null);
+        setTaskInEditMode(null);
         setEditedInput('');
-        setEditedTag('');
     };
 
     const handleMarkTaskCompletedButtonClick = (id) => {
@@ -103,19 +79,21 @@ export default function TodoList() {
             tasks
                 .map((task) =>
                     task.id === id
-                        ? {...task, completed: !task.completed}
+                        ? {...task, taskCompleted: !task.taskCompleted}
                         : task
                 )
                 .slice()
-                .sort((a, b) => Number(a.completed) - Number(b.completed))
+                .sort(
+                    (a, b) => Number(a.taskCompleted) - Number(b.taskCompleted)
+                )
         );
     };
 
     const handleFilterExistingTasksConditionally = () => {
         if (currentTab === 'completed') {
-            return userInput.filter((task) => task.completed);
+            return userInput.filter((task) => task.taskCompleted);
         } else if (currentTab === 'inProgress') {
-            return userInput.filter((task) => !task.completed);
+            return userInput.filter((task) => !task.taskCompleted);
         } else {
             return userInput;
         }
@@ -143,35 +121,6 @@ export default function TodoList() {
         setUserInput(taskMovingDown);
     };
 
-    /*    const handleShowTagButtonClick = (id) => {
-        {
-            newTag &&
-                setUserInput((tasks) =>
-                    tasks.map((task) =>
-                        task.id === id
-                            ? {
-                                  ...task,
-                                  tag: !task.tag,
-                              }
-                            : task
-                    )
-                );
-        }
-    }; */
-
-    /*   const handleRemoveTagButtonClick = (id) => {
-        setUserInput((tasks) =>
-            tasks.map((task) =>
-                task.id === id
-                    ? {
-                          ...task,
-                          newTag: '',
-                      }
-                    : task
-            )
-        );
-    }; */
-
     const handleAddDueDateButtonClick = (id) => {
         setUserInput((tasks) =>
             tasks.map((task) =>
@@ -191,19 +140,26 @@ export default function TodoList() {
     ).toDateString();
 
     return (
-        <div className="h-auto mx-auto max-w-6xl mt-2 rounded shadow-xl flex flex-col bg-WHITE dark:bg-[#272640]">
-            <div className="p-5 flex text-center items-center justify-between shadow-xl text-[#7371fc]">
-                <span className="text-md w-20">{currentDate}</span>
-                <h1 className="text-4xl font-bold text-[#7371fc]">
+        <div className="h-lvh my-0 mx-auto flex flex-col bg-gray-100 dark:bg-[#272640]">
+            <header className="flex items-center justify-between text-[#7371fc] px-2">
+                <span className="w-20 text-md py-4">
+                    {format(currentDate, 'PPP')}
+                </span>
+
+                <h1 className="text-4xl font-bold text-[#7371fc] py-4">
                     To do List
                 </h1>
-                <button onClick={() => handleDarkModeButtonClick()}>
-                    <LightBulbIcon className="size-6 w-20 text-[#7371fc] hover:text-[#cdc1ff] dark:hover:text-[#cdc1ff]" />
-                </button>
-            </div>
 
-            <div className="self-center text-white">
-                <NewTasks
+                <button className="w-20 py-4 group">
+                    <LightBulbIcon
+                        onClick={() => handleDarkModeButtonClick()}
+                        className="ml-auto mr-auto size-6 text-[#7371fc] hover:text-[#cdc1ff] dark:hover:text-[#cdc1ff]"
+                    />
+                </button>
+            </header>
+
+            <main className="self-center text-white">
+                <NewTaskForm
                     newTask={newTask}
                     setNewTask={setNewTask}
                     onAddNewTaskButtonClick={handleAddNewTaskButtonClick}
@@ -211,81 +167,51 @@ export default function TodoList() {
                     onShowExistingTasksConditionally={
                         handleShowExistingTasksConditionally
                     }
-                    newTag={newTag}
-                    setNewTag={setNewTag}
-                    /* onShowTagButtonClick={handleShowTagButtonClick} */
+                    customTag={customTag}
+                    setCustomTag={setCustomTag}
                     date={date}
                     setDate={setDate}
                     onAddDueDateButtonClick={handleAddDueDateButtonClick}
                     selectedTag={selectedTag}
                     setSelectedTag={setSelectedTag}
-                    customTags={customTags}
-                    setCustomTags={setCustomTags}
+                    customTagsList={customTagsList}
+                    setCustomTagsList={setCustomTagsList}
+                    showTasks={showTasks}
                 />
-                {showTasks && (
-                    <Tabs
-                        currentTab={currentTab}
-                        setCurrentTab={setCurrentTab}
-                    />
-                )}
 
-                {showTasks && (
-                    <div className="mb-7">
-                        <Reorder.Group
-                            axis="y"
-                            values={userInput}
-                            onReorder={setUserInput}
-                        >
-                            {handleFilterExistingTasksConditionally().map(
-                                (input, index) => (
-                                    <Reorder.Item value={input} key={input.id}>
-                                        <TaskList
-                                            userInput={input.newTask}
-                                            tag={input.selectedTag}
-                                            newDate={input.taskDate}
-                                            id={input.id}
-                                            completed={input.completed}
-                                            key={input.id}
-                                            onRemoveTaskButtonClick={
-                                                handleRemoveTaskButtonClick
-                                            }
-                                            edit={edit}
-                                            onEditTaskButtonClick={
-                                                handleEditTaskButtonClick
-                                            }
-                                            editedInput={editedInput}
-                                            setEditedInput={setEditedInput}
-                                            onSaveEditedTaskButtonClick={
-                                                handleSaveEditedTaskButtonClick
-                                            }
-                                            onCancelEditingModeButtonClick={
-                                                handleCancelEditingModeButtonClick
-                                            }
-                                            onMarkTaskCompletedButtonClick={
-                                                handleMarkTaskCompletedButtonClick
-                                            }
-                                            index={index}
-                                            onMoveTaskUpButtonClick={
-                                                handleMoveTaskUpButtonClick
-                                            }
-                                            onMoveTaskDownButtonClick={
-                                                handleMoveTaskDownButtonClick
-                                            }
-                                            editedTag={editedTag}
-                                            setEditedTag={setEditedTag}
-                                            /*  onRemoveTagButtonClick={
-                                        handleRemoveTagButtonClick
-                                    } */
-                                            date={date}
-                                            selectedTag={selectedTag}
-                                        />
-                                    </Reorder.Item>
-                                )
-                            )}
-                        </Reorder.Group>
-                    </div>
-                )}
-            </div>
+                <Tabs
+                    showTasks={showTasks}
+                    currentTab={currentTab}
+                    setCurrentTab={setCurrentTab}
+                />
+
+                <Tasklist
+                    showTasks={showTasks}
+                    userInput={userInput}
+                    setUserInput={setUserInput}
+                    date={date}
+                    onRemoveTaskButtonClick={handleRemoveTaskButtonClick}
+                    taskInEditMode={taskInEditMode}
+                    onEditTaskButtonClick={handleEditTaskButtonClick}
+                    editedInput={editedInput}
+                    setEditedInput={setEditedInput}
+                    onSaveEditedTaskButtonClick={
+                        handleSaveEditedTaskButtonClick
+                    }
+                    onCancelEditingModeButtonClick={
+                        handleCancelEditingModeButtonClick
+                    }
+                    onMarkTaskCompletedButtonClick={
+                        handleMarkTaskCompletedButtonClick
+                    }
+                    onMoveTaskUpButtonClick={handleMoveTaskUpButtonClick}
+                    onMoveTaskDownButtonClick={handleMoveTaskDownButtonClick}
+                    selectedTag={selectedTag}
+                    onFilterExistingTasksConditionally={
+                        handleFilterExistingTasksConditionally
+                    }
+                />
+            </main>
         </div>
     );
 }
