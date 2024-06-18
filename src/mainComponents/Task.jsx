@@ -27,7 +27,7 @@ export default function Task({
                 onMoveTaskUpButtonClick={onMoveTaskUpButtonClick}
                 onMoveTaskDownButtonClick={onMoveTaskDownButtonClick}
             />
-            <fragment className="flex-1">
+            <div className="flex-1">
                 <TaskContent
                     userInput={userInput}
                     id={id}
@@ -38,7 +38,7 @@ export default function Task({
                     newDate={newDate}
                     taskCompleted={taskCompleted}
                 />
-            </fragment>
+            </div>
 
             <TaskActions
                 id={id}

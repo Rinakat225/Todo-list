@@ -12,14 +12,14 @@ export default function TodoList() {
     const [taskInEditMode, setTaskInEditMode] = useState(null);
     const [editedInput, setEditedInput] = useState('');
     const [currentTab, setCurrentTab] = useState('all');
-    const [dark, setDark] = useState(false);
+    const [darkModeOn, setDarkModeOn] = useState(false);
     const [customTag, setCustomTag] = useState('');
     const [date, setDate] = useState(null);
     const [selectedTag, setSelectedTag] = useState(null);
     const [customTagsList, setCustomTagsList] = useState([]);
 
     const handleDarkModeButtonClick = () => {
-        setDark(!dark);
+        setDarkModeOn(!darkModeOn);
         document.body.classList.toggle('dark');
     };
 
@@ -145,9 +145,11 @@ export default function TodoList() {
                 <span className="w-20 text-md py-4">
                     {format(currentDate, 'PPP')}
                 </span>
+
                 <h1 className="text-4xl font-bold text-[#7371fc] py-4">
                     To do List
                 </h1>
+
                 <button className="w-20 py-4 group">
                     <LightBulbIcon
                         onClick={() => handleDarkModeButtonClick()}

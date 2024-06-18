@@ -53,7 +53,7 @@ export default function NewTaskForm({
                 onSubmit={handleSubmitUserInputButtonClick}
             >
                 <input
-                    className="h-8 p-2 m-2 font-normal rounded text-black dark:bg-[#525166] dark:text-black w-auto"
+                    className="h-8 p-2 m-2 font-normal rounded text-black dark:text-white dark:bg-[#525166] dark:text-black w-auto"
                     type="text"
                     placeholder="Write your task..."
                     value={newTask}
