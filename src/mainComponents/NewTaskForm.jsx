@@ -1,23 +1,22 @@
+import {useState} from 'react';
 import {DatePicker} from '../components/ui/datePicker';
 import {ComboBoxResponsive} from '../components/ui/combobox';
 
 export default function NewTaskForm({
-    newTask,
-    setNewTask,
-    onAddNewTaskButtonClick,
-    onClearAllTasksButtonClick,
-    onShowExistingTasksConditionally,
-    customTag,
-    setCustomTag,
-    date,
-    setDate,
-    onAddDueDateButtonClick,
+    userInput,
+    setUserInput,
     selectedTag,
     setSelectedTag,
-    customTagsList,
-    setCustomTagsList,
-    showTasks,
 }) {
+    const [newTask, setNewTask] = useState('');
+    const [date, setDate] = useState(null);
+    const [customTag, setCustomTag] = useState('');
+    const [customTagsList, setCustomTagsList] = useState([]);
+
+    const handleAddNewTaskButtonClick = (task) => {
+        setUserInput((previousTasks) => [task, ...previousTasks]);
+    };
+
     const handleSubmitUserInputButtonClick = (e) => {
         e.preventDefault();
 
@@ -31,29 +30,51 @@ export default function NewTaskForm({
             taskDate: null,
         };
 
-        onAddNewTaskButtonClick(task);
+        handleAddNewTaskButtonClick(task);
 
         setNewTask('');
 
-        onShowExistingTasksConditionally();
-
         setCustomTag('');
 
-        onAddDueDateButtonClick(task.id);
+        handleAddDueDateButtonClick(task.id);
 
         setDate(null);
 
         setSelectedTag(null);
     };
 
+    const handleAddDueDateButtonClick = (id) => {
+        setUserInput((tasks) =>
+            tasks.map((task) =>
+                task.id === id
+                    ? {
+                          ...task,
+                          taskDate: date,
+                      }
+                    : task
+            )
+        );
+    };
+
+    const handleClearAllTasksButtonClick = (e) => {
+        e.preventDefault();
+
+        if (userInput.length === 0) return;
+
+        setNewTask('');
+        setUserInput([]);
+        setDate(null);
+        setSelectedTag(null);
+    };
+
     return (
-        <fragment className="text-xs shadow-md rounded flex items-center h-auto p-2 mt-3 mb-9 bg-white dark:bg-[#525166]">
+        <div className="text-xs shadow-md rounded flex items-center h-auto p-2 bg-white dark:bg-[#525166]">
             <form
-                className="flex items-center"
+                className="flex items-center space-x-2"
                 onSubmit={handleSubmitUserInputButtonClick}
             >
                 <input
-                    className="h-8 p-2 m-2 font-normal rounded text-black dark:text-white dark:bg-[#525166] dark:text-black w-auto"
+                    className="h-8 p-2 font-normal rounded text-black dark:text-white dark:bg-[#525166] w-auto"
                     type="text"
                     placeholder="Write your task..."
                     value={newTask}
@@ -71,20 +92,20 @@ export default function NewTaskForm({
 
                 <DatePicker date={date} setDate={setDate} />
 
-                <button className="h-8 m-2 p-2 rounded font-semibold bg-[#7371fc] text-white hover:text-[#cdc1ff]">
+                <button className="p-2 rounded font-semibold bg-[#7371fc] text-white hover:text-[#cdc1ff]">
                     Add
                 </button>
+                <button
+                    className={
+                        userInput.length === 0
+                            ? 'p-2 rounded font-normal text-[#cdc1ff]'
+                            : 'p-2 font-normal text-[#7371fc] hover:text-[#cdc1ff]'
+                    }
+                    onClick={handleClearAllTasksButtonClick}
+                >
+                    Clear all
+                </button>
             </form>
-            <button
-                className={
-                    !showTasks
-                        ? 'h-8 p-2 rounded font-normal text-[#cdc1ff]'
-                        : 'font-semibold text-[#7371fc] hover:text-[#cdc1ff]'
-                }
-                onClick={() => onClearAllTasksButtonClick()}
-            >
-                Clear all
-            </button>
-        </fragment>
+        </div>
     );
 }

@@ -1,6 +1,6 @@
 import {twMerge} from 'tailwind-merge';
 
-export default function Tabs({showTasks, setCurrentTab, currentTab}) {
+export default function Tabs({userInput, setCurrentTab, currentTab}) {
     const TABS_DEFAULT_CLASSNAMES =
         'p-1 w-1/3 rounded text-lg shadow-inner font-normal text-[#7371fc] hover:text-[#cdc1ff] bg-[#f8f9fa] dark:bg-[#686779]';
     const TABS_ACTIVE_CLASSNAMES =
@@ -8,8 +8,8 @@ export default function Tabs({showTasks, setCurrentTab, currentTab}) {
 
     return (
         <>
-            {showTasks && (
-                <div className="overflow-hidden flex justify-between gap-2 mb-3">
+            {userInput.length > 0 && (
+                <div className="overflow-hidden flex justify-between space-x-2 pt-8 pb-2">
                     <button
                         className={
                             currentTab === 'all'

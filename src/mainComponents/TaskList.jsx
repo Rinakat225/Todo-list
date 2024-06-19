@@ -1,73 +1,43 @@
+import {useState} from 'react';
 import Task from './Task';
+import Tabs from './Tabs';
 import {Reorder} from 'framer-motion';
 
-export default function TaskList({
-    showTasks,
-    userInput,
-    setUserInput,
-    date,
-    onFilterExistingTasksConditionally,
-    onRemoveTaskButtonClick,
-    taskInEditMode,
-    onEditTaskButtonClick,
-    editedInput,
-    setEditedInput,
-    onSaveEditedTaskButtonClick,
-    onCancelEditingModeButtonClick,
-    onMarkTaskCompletedButtonClick,
-    onMoveTaskUpButtonClick,
-    onMoveTaskDownButtonClick,
-    selectedTag,
-}) {
+export default function TaskList({userInput, setUserInput}) {
+    const [currentTab, setCurrentTab] = useState('all');
+
+    const filteredTasks = userInput.filter((task) => {
+        if (currentTab === 'completed') {
+            return task.taskCompleted;
+        } else if (currentTab === 'inProgress') {
+            return !task.taskCompleted;
+        } else {
+            return userInput;
+        }
+    });
+
     return (
         <>
-            {showTasks && (
+            <Tabs
+                userInput={userInput}
+                currentTab={currentTab}
+                setCurrentTab={setCurrentTab}
+            />
+            {userInput.length > 0 && (
                 <Reorder.Group
                     axis="y"
                     values={userInput}
                     onReorder={setUserInput}
                 >
-                    {onFilterExistingTasksConditionally().map(
-                        (input, index) => (
-                            <Reorder.Item value={input} key={input.id}>
-                                <Task
-                                    userInput={input.newTask}
-                                    tag={input.selectedTag}
-                                    newDate={input.taskDate}
-                                    id={input.id}
-                                    taskCompleted={input.taskCompleted}
-                                    key={input.id}
-                                    onRemoveTaskButtonClick={
-                                        onRemoveTaskButtonClick
-                                    }
-                                    taskInEditMode={taskInEditMode}
-                                    onEditTaskButtonClick={
-                                        onEditTaskButtonClick
-                                    }
-                                    editedInput={editedInput}
-                                    setEditedInput={setEditedInput}
-                                    onSaveEditedTaskButtonClick={
-                                        onSaveEditedTaskButtonClick
-                                    }
-                                    onCancelEditingModeButtonClick={
-                                        onCancelEditingModeButtonClick
-                                    }
-                                    onMarkTaskCompletedButtonClick={
-                                        onMarkTaskCompletedButtonClick
-                                    }
-                                    index={index}
-                                    onMoveTaskUpButtonClick={
-                                        onMoveTaskUpButtonClick
-                                    }
-                                    onMoveTaskDownButtonClick={
-                                        onMoveTaskDownButtonClick
-                                    }
-                                    date={date}
-                                    selectedTag={selectedTag}
-                                />
-                            </Reorder.Item>
-                        )
-                    )}
+                    {filteredTasks.map((input, index) => (
+                        <Reorder.Item value={input} key={input.id}>
+                            <Task
+                                userInput={input}
+                                setUserInput={setUserInput}
+                                index={index}
+                            />
+                        </Reorder.Item>
+                    ))}
                 </Reorder.Group>
             )}
         </>
