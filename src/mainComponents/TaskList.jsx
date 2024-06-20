@@ -35,6 +35,7 @@ export default function TaskList({userInput, setUserInput}) {
                                 userInput={input}
                                 setUserInput={setUserInput}
                                 index={index}
+                                tasksArray={userInput}
                             />
                         </Reorder.Item>
                     ))}

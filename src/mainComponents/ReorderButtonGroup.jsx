@@ -1,10 +1,10 @@
 import {ChevronUpIcon} from '@heroicons/react/24/outline';
 import {ChevronDownIcon} from '@heroicons/react/24/outline';
 
-const MoveTaskButton = ({direction, index, setUserInput, userInput}) => {
+const MoveTaskButton = ({direction, index, setUserInput, tasksArray}) => {
     const handleMoveTask = () => {
         if (direction === 'up' && index === 0) return;
-        if (direction === 'down' && index === userInput.length - 1) return;
+        if (direction === 'down' && index === tasksArray.length - 1) return;
 
         setUserInput((tasks) => {
             const reorderedTask = [...tasks];
@@ -19,28 +19,40 @@ const MoveTaskButton = ({direction, index, setUserInput, userInput}) => {
     return (
         <button onClick={() => handleMoveTask()}>
             {direction === 'up' ? (
-                <ChevronUpIcon className="size-5 hover:text-[#cdc1ff] dark:hover:text-[#7371fc]" />
+                <ChevronUpIcon
+                    className={
+                        index === 0
+                            ? 'size-5 hover:text-none'
+                            : 'size-5 hover:text-[#cdc1ff] dark:hover:text-[#7371fc]'
+                    }
+                />
             ) : (
-                <ChevronDownIcon className="size-5 hover:text-[#cdc1ff] dark:hover:text-[#7371fc]" />
+                <ChevronDownIcon
+                    className={
+                        index === tasksArray.length - 1
+                            ? 'size-5 hover:text-none'
+                            : 'size-5 hover:text-[#cdc1ff] dark:hover:text-[#7371fc]'
+                    }
+                />
             )}
         </button>
     );
 };
 
-export default function ReorderButtonGroup({index, setUserInput, userInput}) {
+export default function ReorderButtonGroup({index, setUserInput, tasksArray}) {
     return (
         <div className="flex flex-col">
             <MoveTaskButton
                 direction="up"
                 index={index}
                 setUserInput={setUserInput}
-                userInput={userInput}
+                tasksArray={tasksArray}
             />
             <MoveTaskButton
                 direction="down"
                 index={index}
                 setUserInput={setUserInput}
-                userInput={userInput}
+                tasksArray={tasksArray}
             />
         </div>
     );

@@ -7,7 +7,6 @@ import {format} from 'date-fns';
 export default function TodoList() {
     const [userInput, setUserInput] = useState([]);
     const [darkModeOn, setDarkModeOn] = useState(false);
-    const [selectedTag, setSelectedTag] = useState(null);
 
     const handleDarkModeButtonClick = () => {
         setDarkModeOn(!darkModeOn);
@@ -42,15 +41,9 @@ export default function TodoList() {
                 <NewTaskForm
                     userInput={userInput}
                     setUserInput={setUserInput}
-                    selectedTag={selectedTag}
-                    setSelectedTag={setSelectedTag}
                 />
 
-                <Tasklist
-                    userInput={userInput}
-                    setUserInput={setUserInput}
-                    selectedTag={selectedTag}
-                />
+                <Tasklist userInput={userInput} setUserInput={setUserInput} />
             </main>
         </div>
     );

@@ -45,10 +45,9 @@ export function ComboBoxResponsive({
     setSelectedTag,
     customTag,
     setCustomTag,
-    customTagsList,
-    setCustomTagsList,
 }) {
     const [open, setOpen] = useState(false);
+    const [customTagsList, setCustomTagsList] = useState([]);
 
     return (
         <Popover open={open} onOpenChange={setOpen}>

@@ -2,16 +2,11 @@ import {useState} from 'react';
 import {DatePicker} from '../components/ui/datePicker';
 import {ComboBoxResponsive} from '../components/ui/combobox';
 
-export default function NewTaskForm({
-    userInput,
-    setUserInput,
-    selectedTag,
-    setSelectedTag,
-}) {
+export default function NewTaskForm({userInput, setUserInput}) {
     const [newTask, setNewTask] = useState('');
     const [date, setDate] = useState(null);
     const [customTag, setCustomTag] = useState('');
-    const [customTagsList, setCustomTagsList] = useState([]);
+    const [selectedTag, setSelectedTag] = useState('');
 
     const handleAddNewTaskButtonClick = (task) => {
         setUserInput((previousTasks) => [task, ...previousTasks]);
@@ -32,15 +27,15 @@ export default function NewTaskForm({
 
         handleAddNewTaskButtonClick(task);
 
+        handleAddDueDateButtonClick(task.id);
+
         setNewTask('');
 
         setCustomTag('');
 
-        handleAddDueDateButtonClick(task.id);
-
         setDate(null);
 
-        setSelectedTag(null);
+        setSelectedTag('');
     };
 
     const handleAddDueDateButtonClick = (id) => {
@@ -64,7 +59,7 @@ export default function NewTaskForm({
         setNewTask('');
         setUserInput([]);
         setDate(null);
-        setSelectedTag(null);
+        setSelectedTag('');
     };
 
     return (
@@ -86,8 +81,6 @@ export default function NewTaskForm({
                     setSelectedTag={setSelectedTag}
                     customTag={customTag}
                     setCustomTag={setCustomTag}
-                    customTagsList={customTagsList}
-                    setCustomTagsList={setCustomTagsList}
                 />
 
                 <DatePicker date={date} setDate={setDate} />

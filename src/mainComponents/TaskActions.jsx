@@ -24,13 +24,13 @@ export default function TaskActions({
     };
 
     const handleSaveEditedTaskButtonClick = (id) => {
-        if (!editedInput) {
+        if (editedInput === userInput.newTask) {
             return;
         }
 
         setUserInput((tasks) =>
             tasks.map((task) =>
-                task.id === id
+                task.id === id && editedInput
                     ? {
                           ...task,
                           newTask: editedInput,
@@ -93,7 +93,7 @@ export default function TaskActions({
                         <span>
                             <CheckIcon
                                 className={
-                                    !editedInput
+                                    editedInput === userInput.newTask
                                         ? `${twMerge(
                                               TASK_ACTIONS_ICON_CLASSNAMES,
                                               'group-hover:text-none text-[#cdc1ff]'

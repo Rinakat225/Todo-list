@@ -3,7 +3,7 @@ import TaskContent from './TaskContent';
 import TaskActions from './TaskActions';
 import ReorderButtonGroup from './ReorderButtonGroup';
 
-export default function Task({userInput, setUserInput, index}) {
+export default function Task({userInput, setUserInput, index, tasksArray}) {
     const [editedInput, setEditedInput] = useState('');
     const [taskInEditMode, setTaskInEditMode] = useState('');
 
@@ -11,7 +11,7 @@ export default function Task({userInput, setUserInput, index}) {
         <div className="flex justify-between gap-5 mb-2 items-center p-5 cursor-grab bg-white dark:bg-[#525166] rounded shadow-md text-base font-semibold text-black dark:text-[#cdc1ff]">
             <ReorderButtonGroup
                 index={index}
-                userInput={userInput}
+                tasksArray={tasksArray}
                 setUserInput={setUserInput}
             />
 
@@ -20,6 +20,7 @@ export default function Task({userInput, setUserInput, index}) {
                     userInput={userInput}
                     taskInEditMode={taskInEditMode}
                     setEditedInput={setEditedInput}
+                    editedInput={editedInput}
                 />
             </div>
 

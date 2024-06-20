@@ -5,6 +5,7 @@ export default function TaskContent({
     userInput,
     taskInEditMode,
     setEditedInput,
+    editedInput,
 }) {
     return (
         <div>
@@ -26,7 +27,7 @@ export default function TaskContent({
                         className="min-h-6 max-h-6 w-30 p-1.5 rounded shadow-inner bg-[#e9ecef] dark:bg-[#686779] text-black dark:text-[#cdc1ff] font-normal"
                         type="text"
                         defaultValue={userInput.newTask}
-                        value={userInput.editedInput}
+                        value={editedInput}
                         onChange={(event) => setEditedInput(event.target.value)}
                     />
                 ) : (
