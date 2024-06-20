@@ -3,39 +3,35 @@ import Task from './Task';
 import Tabs from './Tabs';
 import {Reorder} from 'framer-motion';
 
-export default function TaskList({userInput, setUserInput}) {
+export default function TaskList({tasks, setTasks}) {
     const [currentTab, setCurrentTab] = useState('all');
 
-    const filteredTasks = userInput.filter((task) => {
+    const filteredTasks = tasks.filter((task) => {
         if (currentTab === 'completed') {
-            return task.taskCompleted;
+            return task.completed;
         } else if (currentTab === 'inProgress') {
-            return !task.taskCompleted;
+            return !task.completed;
         } else {
-            return userInput;
+            return tasks;
         }
     });
 
     return (
         <>
             <Tabs
-                userInput={userInput}
+                tasks={tasks}
                 currentTab={currentTab}
                 setCurrentTab={setCurrentTab}
             />
-            {userInput.length > 0 && (
-                <Reorder.Group
-                    axis="y"
-                    values={userInput}
-                    onReorder={setUserInput}
-                >
+            {tasks.length > 0 && (
+                <Reorder.Group axis="y" values={tasks} onReorder={setTasks}>
                     {filteredTasks.map((input, index) => (
                         <Reorder.Item value={input} key={input.id}>
                             <Task
-                                userInput={input}
-                                setUserInput={setUserInput}
+                                task={input}
+                                setTasks={setTasks}
                                 index={index}
-                                tasksArray={userInput}
+                                tasksArray={tasks}
                             />
                         </Reorder.Item>
                     ))}

@@ -5,44 +5,44 @@ import {CheckIcon} from '@heroicons/react/20/solid';
 import {twMerge} from 'tailwind-merge';
 
 export default function TaskActions({
-    userInput,
-    setUserInput,
-    taskInEditMode,
-    setTaskInEditMode,
-    editedInput,
-    setEditedInput,
+    task,
+    setTasks,
+    currentTaskId,
+    setCurrentTaskId,
+    editedValue,
+    setEditedValue,
     onRemoveTaskButtonClick,
 }) {
     const handleEditTaskButtonClick = (id) => {
-        setTaskInEditMode(id);
-        setEditedInput(userInput.newTask);
+        setCurrentTaskId(id);
+        setEditedValue(task.value);
     };
 
     const handleCancelEditingModeButtonClick = () => {
-        setTaskInEditMode('');
-        setEditedInput('');
+        setCurrentTaskId('');
+        setEditedValue('');
     };
 
     const handleSaveEditedTaskButtonClick = (id) => {
-        if (editedInput === userInput.newTask) {
+        if (editedValue === task.value) {
             return;
         }
 
-        setUserInput((tasks) =>
+        setTasks((tasks) =>
             tasks.map((task) =>
-                task.id === id && editedInput
+                task.id === id && editedValue
                     ? {
                           ...task,
-                          newTask: editedInput,
+                          value: editedValue,
                       }
                     : task
             )
         );
-        setTaskInEditMode('');
+        setCurrentTaskId('');
     };
 
     const handleMarkTaskCompletedButtonClick = (id) => {
-        setUserInput((task) => {
+        setTasks((task) => {
             const taskIndex = task.findIndex((task) => task.id === id);
             if (taskIndex === -1) {
                 return task;
@@ -50,29 +50,29 @@ export default function TaskActions({
 
             const updatedTask = {
                 ...task[taskIndex],
-                taskCompleted: !task[taskIndex].taskCompleted,
+                completed: !task[taskIndex].completed,
             };
             const newTasks = [...task];
             newTasks[taskIndex] = updatedTask;
 
             newTasks.sort(
                 (previousTask, currentTask) =>
-                    Number(previousTask.taskCompleted) -
-                    Number(currentTask.taskCompleted)
+                    Number(previousTask.completed) -
+                    Number(currentTask.completed)
             );
 
             return newTasks;
         });
     };
     const TASK_ACTIONS_BTN_CLASSNAMES =
-        'group w-8 h-8 rounded-full flex justify-center items-center shadow-inner bg-[#f8f9fa] dark:bg-[#3d3c53]';
+        'group size-8 rounded-full flex justify-center items-center shadow-inner bg-[#f8f9fa] dark:bg-[#3d3c53]';
 
     const TASK_ACTIONS_ICON_CLASSNAMES =
         'size-4 text-[#7371fc] dark:text-[#cdc1ff] group-hover:text-[#cdc1ff] dark:group-hover:text-[#7371fc]';
 
     return (
         <div className="flex gap-1">
-            {taskInEditMode === userInput.id ? (
+            {currentTaskId === task.id ? (
                 <>
                     <button
                         onClick={() => handleCancelEditingModeButtonClick()}
@@ -85,18 +85,23 @@ export default function TaskActions({
                         </span>
                     </button>
                     <button
-                        onClick={() =>
-                            handleSaveEditedTaskButtonClick(userInput.id)
+                        onClick={() => handleSaveEditedTaskButtonClick(task.id)}
+                        className={
+                            editedValue === task.value
+                                ? `${twMerge(
+                                      TASK_ACTIONS_BTN_CLASSNAMES,
+                                      'cursor-default'
+                                  )}`
+                                : `${TASK_ACTIONS_BTN_CLASSNAMES}`
                         }
-                        className={TASK_ACTIONS_BTN_CLASSNAMES}
                     >
                         <span>
                             <CheckIcon
                                 className={
-                                    editedInput === userInput.newTask
+                                    editedValue === task.value
                                         ? `${twMerge(
                                               TASK_ACTIONS_ICON_CLASSNAMES,
-                                              'group-hover:text-none text-[#cdc1ff]'
+                                              'group-hover:text-none text-[#cdc1ff] '
                                           )}`
                                         : `${TASK_ACTIONS_ICON_CLASSNAMES}`
                                 }
@@ -107,7 +112,7 @@ export default function TaskActions({
             ) : (
                 <>
                     <button
-                        onClick={() => onRemoveTaskButtonClick(userInput.id)}
+                        onClick={() => onRemoveTaskButtonClick(task.id)}
                         className={TASK_ACTIONS_BTN_CLASSNAMES}
                     >
                         <span>
@@ -117,7 +122,7 @@ export default function TaskActions({
                         </span>
                     </button>
                     <button
-                        onClick={() => handleEditTaskButtonClick(userInput.id)}
+                        onClick={() => handleEditTaskButtonClick(task.id)}
                         className={TASK_ACTIONS_BTN_CLASSNAMES}
                     >
                         <span>
@@ -128,11 +133,11 @@ export default function TaskActions({
                     </button>
                     <button
                         onClick={() =>
-                            handleMarkTaskCompletedButtonClick(userInput.id)
+                            handleMarkTaskCompletedButtonClick(task.id)
                         }
                         className={TASK_ACTIONS_BTN_CLASSNAMES}
                     >
-                        {!userInput.taskCompleted ? (
+                        {!task.completed ? (
                             <span>
                                 <CheckIcon
                                     className={TASK_ACTIONS_ICON_CLASSNAMES}

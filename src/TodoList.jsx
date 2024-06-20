@@ -5,7 +5,7 @@ import {LightBulbIcon} from '@heroicons/react/24/outline';
 import {format} from 'date-fns';
 
 export default function TodoList() {
-    const [userInput, setUserInput] = useState([]);
+    const [tasks, setTasks] = useState([]);
     const [darkModeOn, setDarkModeOn] = useState(false);
 
     const handleDarkModeButtonClick = () => {
@@ -32,18 +32,15 @@ export default function TodoList() {
                 <button className="w-20 py-4 group">
                     <LightBulbIcon
                         onClick={() => handleDarkModeButtonClick()}
-                        className="ml-auto mr-auto size-6 text-[#7371fc] hover:text-[#cdc1ff] dark:hover:text-[#cdc1ff]"
+                        className="ml-auto mr-auto size-6 text-[#7371fc] hover:text-[#cdc1ff] "
                     />
                 </button>
             </header>
 
             <main className="self-center text-white">
-                <NewTaskForm
-                    userInput={userInput}
-                    setUserInput={setUserInput}
-                />
+                <NewTaskForm tasks={tasks} setTasks={setTasks} />
 
-                <Tasklist userInput={userInput} setUserInput={setUserInput} />
+                <Tasklist tasks={tasks} setTasks={setTasks} />
             </main>
         </div>
     );

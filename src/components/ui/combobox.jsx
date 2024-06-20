@@ -122,7 +122,7 @@ function StatusList({
             </Command>
             <div className="flex flex-col gap-2 p-3 m-0.5 w-25">
                 <input
-                    className="p-2 shadow-md text-sm"
+                    className="p-1.5 rounded shadow-md text-xs dark:text-black"
                     type="text"
                     placeholder="Write a custom tag..."
                     value={customTag}

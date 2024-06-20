@@ -2,34 +2,34 @@ import {useState} from 'react';
 import {DatePicker} from '../components/ui/datePicker';
 import {ComboBoxResponsive} from '../components/ui/combobox';
 
-export default function NewTaskForm({userInput, setUserInput}) {
-    const [newTask, setNewTask] = useState('');
+export default function NewTaskForm({tasks, setTasks}) {
+    const [taskValue, setTaskValue] = useState('');
     const [date, setDate] = useState(null);
     const [customTag, setCustomTag] = useState('');
     const [selectedTag, setSelectedTag] = useState('');
 
     const handleAddNewTaskButtonClick = (task) => {
-        setUserInput((previousTasks) => [task, ...previousTasks]);
+        setTasks((previousTasks) => [task, ...previousTasks]);
     };
 
     const handleSubmitUserInputButtonClick = (e) => {
         e.preventDefault();
 
-        if (!newTask) return;
+        if (!taskValue) return;
 
         const task = {
-            newTask,
-            taskCompleted: false,
+            value: taskValue,
+            completed: false,
             id: Date.now(),
-            selectedTag,
-            taskDate: null,
+            tag: selectedTag,
+            dueDate: null,
         };
 
         handleAddNewTaskButtonClick(task);
 
         handleAddDueDateButtonClick(task.id);
 
-        setNewTask('');
+        setTaskValue('');
 
         setCustomTag('');
 
@@ -39,12 +39,12 @@ export default function NewTaskForm({userInput, setUserInput}) {
     };
 
     const handleAddDueDateButtonClick = (id) => {
-        setUserInput((tasks) =>
+        setTasks((tasks) =>
             tasks.map((task) =>
                 task.id === id
                     ? {
                           ...task,
-                          taskDate: date,
+                          dueDate: date,
                       }
                     : task
             )
@@ -54,26 +54,26 @@ export default function NewTaskForm({userInput, setUserInput}) {
     const handleClearAllTasksButtonClick = (e) => {
         e.preventDefault();
 
-        if (userInput.length === 0) return;
+        if (tasks.length === 0) return;
 
-        setNewTask('');
-        setUserInput([]);
+        setTaskValue('');
+        setTasks([]);
         setDate(null);
         setSelectedTag('');
     };
 
     return (
-        <div className="text-xs shadow-md rounded flex items-center h-auto p-2 bg-white dark:bg-[#525166]">
+        <div className="shadow-md rounded flex items-center p-2 bg-white dark:bg-[#525166]">
             <form
                 className="flex items-center space-x-2"
                 onSubmit={handleSubmitUserInputButtonClick}
             >
                 <input
-                    className="h-8 p-2 font-normal rounded text-black dark:text-white dark:bg-[#525166] w-auto"
+                    className="p-2 font-normal rounded text-black dark:text-white dark:bg-[#525166]"
                     type="text"
                     placeholder="Write your task..."
-                    value={newTask}
-                    onChange={(event) => setNewTask(event.target.value)}
+                    value={taskValue}
+                    onChange={(event) => setTaskValue(event.target.value)}
                 />
 
                 <ComboBoxResponsive
@@ -90,8 +90,8 @@ export default function NewTaskForm({userInput, setUserInput}) {
                 </button>
                 <button
                     className={
-                        userInput.length === 0
-                            ? 'p-2 rounded font-normal text-[#cdc1ff]'
+                        tasks.length === 0
+                            ? 'p-2 rounded font-normal text-[#cdc1ff] cursor-default'
                             : 'p-2 font-normal text-[#7371fc] hover:text-[#cdc1ff]'
                     }
                     onClick={handleClearAllTasksButtonClick}
