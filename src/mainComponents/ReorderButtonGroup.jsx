@@ -1,5 +1,6 @@
 import {ChevronUpIcon} from '@heroicons/react/24/outline';
 import {ChevronDownIcon} from '@heroicons/react/24/outline';
+import {twMerge} from 'tailwind-merge';
 
 const MoveTaskButton = ({direction, index, setTasks, tasksArray}) => {
     const handleMoveTask = () => {
@@ -7,12 +8,12 @@ const MoveTaskButton = ({direction, index, setTasks, tasksArray}) => {
         if (direction === 'down' && index === tasksArray.length - 1) return;
 
         setTasks((tasks) => {
-            const reorderedTask = [...tasks];
-            const [task] = reorderedTask.splice(index, 1);
+            const reorderedTasks = [...tasks];
+            const task = reorderedTasks.splice(index, 1)[0];
             const newIndex = direction === 'up' ? index - 1 : index + 1;
-            reorderedTask.splice(newIndex, 0, task);
+            reorderedTasks.splice(newIndex, 0, task);
 
-            return reorderedTask;
+            return reorderedTasks;
         });
     };
 
@@ -25,19 +26,17 @@ const MoveTaskButton = ({direction, index, setTasks, tasksArray}) => {
         <button onClick={() => handleMoveTask()}>
             {direction === 'up' ? (
                 <ChevronUpIcon
-                    className={
-                        index === 0
-                            ? BUTTON_DISABLED_STYLE
-                            : BUTTON_DEFAULT_STYLE
-                    }
+                    className={twMerge(
+                        BUTTON_DEFAULT_STYLE,
+                        index === 0 && BUTTON_DISABLED_STYLE
+                    )}
                 />
             ) : (
                 <ChevronDownIcon
-                    className={
-                        index === tasksArray.length - 1
-                            ? BUTTON_DISABLED_STYLE
-                            : BUTTON_DEFAULT_STYLE
-                    }
+                    className={twMerge(
+                        BUTTON_DEFAULT_STYLE,
+                        index === tasksArray.length - 1 && BUTTON_DISABLED_STYLE
+                    )}
                 />
             )}
         </button>

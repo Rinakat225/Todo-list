@@ -29,8 +29,8 @@ export default function TaskList({tasks, setTasks}) {
                         <Reorder.Item value={input} key={input.id}>
                             <Task
                                 task={input}
-                                setTasks={setTasks}
                                 index={index}
+                                setTasks={setTasks}
                                 tasksArray={tasks}
                             />
                         </Reorder.Item>

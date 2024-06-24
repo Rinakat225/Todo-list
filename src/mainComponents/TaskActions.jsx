@@ -2,7 +2,7 @@ import {XMarkIcon} from '@heroicons/react/20/solid';
 import {TrashIcon} from '@heroicons/react/20/solid';
 import {PencilSquareIcon} from '@heroicons/react/20/solid';
 import {CheckIcon} from '@heroicons/react/20/solid';
-import {twMerge} from 'tailwind-merge';
+import ActionsButton from './ActionsButton';
 
 export default function TaskActions({
     task,
@@ -64,93 +64,48 @@ export default function TaskActions({
             return newTasks;
         });
     };
-    const TASK_ACTIONS_BTN_CLASSNAMES =
-        'group size-8 rounded-full flex justify-center items-center shadow-inner bg-[#f8f9fa] dark:bg-[#3d3c53]';
-
-    const TASK_ACTIONS_ICON_CLASSNAMES =
-        'size-4 text-[#7371fc] dark:text-[#cdc1ff] group-hover:text-[#cdc1ff] dark:group-hover:text-[#7371fc]';
 
     return (
         <div className="flex gap-1">
             {currentTaskId === task.id ? (
                 <>
-                    <button
+                    <ActionsButton
                         onClick={() => handleCancelEditingModeButtonClick()}
-                        className={TASK_ACTIONS_BTN_CLASSNAMES}
-                    >
-                        <span>
-                            <XMarkIcon
-                                className={TASK_ACTIONS_ICON_CLASSNAMES}
-                            />
-                        </span>
-                    </button>
-                    <button
+                        icon={<XMarkIcon />}
+                    />
+                    <ActionsButton
                         onClick={() => handleSaveEditedTaskButtonClick(task.id)}
                         className={
-                            editedValue === task.value
-                                ? `${twMerge(
-                                      TASK_ACTIONS_BTN_CLASSNAMES,
-                                      'cursor-default'
-                                  )}`
-                                : `${TASK_ACTIONS_BTN_CLASSNAMES}`
+                            editedValue === task.value && 'cursor-default'
                         }
-                    >
-                        <span>
+                        icon={
                             <CheckIcon
                                 className={
-                                    editedValue === task.value
-                                        ? `${twMerge(
-                                              TASK_ACTIONS_ICON_CLASSNAMES,
-                                              'group-hover:text-none text-[#cdc1ff] '
-                                          )}`
-                                        : `${TASK_ACTIONS_ICON_CLASSNAMES}`
+                                    editedValue === task.value &&
+                                    'text-[#cdc1ff]'
                                 }
                             />
-                        </span>
-                    </button>
+                        }
+                    />
                 </>
             ) : (
                 <>
-                    <button
+                    <ActionsButton
                         onClick={() => onRemoveTaskButtonClick(task.id)}
-                        className={TASK_ACTIONS_BTN_CLASSNAMES}
-                    >
-                        <span>
-                            <TrashIcon
-                                className={TASK_ACTIONS_ICON_CLASSNAMES}
-                            />
-                        </span>
-                    </button>
-                    <button
+                        icon={<TrashIcon />}
+                    />
+
+                    <ActionsButton
                         onClick={() => handleEditTaskButtonClick(task.id)}
-                        className={TASK_ACTIONS_BTN_CLASSNAMES}
-                    >
-                        <span>
-                            <PencilSquareIcon
-                                className={TASK_ACTIONS_ICON_CLASSNAMES}
-                            />
-                        </span>
-                    </button>
-                    <button
+                        icon={<PencilSquareIcon />}
+                    />
+
+                    <ActionsButton
                         onClick={() =>
                             handleMarkTaskCompletedButtonClick(task.id)
                         }
-                        className={TASK_ACTIONS_BTN_CLASSNAMES}
-                    >
-                        {!task.completed ? (
-                            <span>
-                                <CheckIcon
-                                    className={TASK_ACTIONS_ICON_CLASSNAMES}
-                                />
-                            </span>
-                        ) : (
-                            <span>
-                                <XMarkIcon
-                                    className={TASK_ACTIONS_ICON_CLASSNAMES}
-                                />
-                            </span>
-                        )}
-                    </button>
+                        icon={!task.completed ? <CheckIcon /> : <XMarkIcon />}
+                    />
                 </>
             )}
         </div>

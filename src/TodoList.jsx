@@ -13,10 +13,7 @@ export default function TodoList() {
         document.body.classList.toggle('dark');
     };
 
-    const todaysDate = new Date();
-    const currentDate = new Date(
-        new Date(todaysDate).setDate(todaysDate.getDate())
-    ).toDateString();
+    const currentDate = new Date().toDateString();
 
     return (
         <div className="h-lvh my-0 mx-auto flex flex-col bg-gray-100 dark:bg-[#272640]">
@@ -29,10 +26,10 @@ export default function TodoList() {
                     To do List
                 </h1>
 
-                <button className="w-20 py-4 group">
+                <button className="w-20 py-4 group cursor-default">
                     <LightBulbIcon
                         onClick={() => handleDarkModeButtonClick()}
-                        className="ml-auto mr-auto size-6 text-[#7371fc] hover:text-[#cdc1ff] "
+                        className="ml-auto mr-auto size-6 text-[#7371fc] hover:text-[#cdc1ff] cursor-pointer"
                     />
                 </button>
             </header>
