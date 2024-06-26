@@ -12,7 +12,7 @@ export default function TaskContent({
             <div className="flex items-center text-sm text-[#65717b] dark:text-white mb-0.5">
                 {task.dueDate && (
                     <span className="flex items-center gap-0.5 mr-3">
-                        <CalendarIcon className="h-3 w-3" />
+                        <CalendarIcon className="size-3" />
                         {format(task.dueDate, 'PP')}
                     </span>
                 )}
@@ -39,6 +39,9 @@ export default function TaskContent({
                         {task.value}
                     </span>
                 )}
+            </div>
+            <div className="text-sm text-[#65717b] dark:text-white">
+                Created: {task.creationDate.toString().slice(0, 21)}
             </div>
         </div>
     );

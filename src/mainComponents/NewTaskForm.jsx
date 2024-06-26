@@ -2,15 +2,19 @@ import {useState} from 'react';
 import {DatePicker} from '../components/ui/datePicker';
 import {ComboBoxResponsive} from '../components/ui/combobox';
 import {twMerge} from 'tailwind-merge';
+import SortTasks from './SortTasks';
 
-export default function NewTaskForm({tasks, setTasks}) {
+export default function NewTaskForm({tasks, setTasks, setSortBy}) {
     const [taskValue, setTaskValue] = useState('');
-    const [date, setDate] = useState(null);
+    const [date, setDate] = useState(new Date().toDateString());
     const [selectedTag, setSelectedTag] = useState('');
+    const [creationDate, setCreationDate] = useState(
+        new Date().toString().slice(0, 21)
+    );
 
     const resetNewTaskFormStates = () => {
         setTaskValue('');
-        setDate(null);
+        setDate(new Date().toDateString());
         setSelectedTag('');
     };
 
@@ -30,6 +34,7 @@ export default function NewTaskForm({tasks, setTasks}) {
             id: Date.now(),
             tag: selectedTag,
             dueDate: date,
+            creationDate: creationDate,
         };
 
         handleAddNewTaskButtonClick(task);
@@ -37,6 +42,8 @@ export default function NewTaskForm({tasks, setTasks}) {
         handleAddDueDateButtonClick(task.id);
 
         resetNewTaskFormStates();
+
+        setCreationDate(new Date().toString().slice(0, 21));
     };
 
     const handleAddDueDateButtonClick = (id) => {
@@ -60,10 +67,12 @@ export default function NewTaskForm({tasks, setTasks}) {
         setTasks([]);
 
         resetNewTaskFormStates();
+
+        setSortBy('sortby');
     };
 
     return (
-        <div className="shadow-md rounded flex items-center p-2 bg-white dark:bg-[#525166]">
+        <div className="shadow-md rounded p-2 bg-white dark:bg-[#525166]">
             <form
                 className="flex items-center space-x-2"
                 onSubmit={handleSubmitUserInputButtonClick}
