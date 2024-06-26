@@ -19,7 +19,7 @@ export default function TaskContent({
                 {task.tag && <span>#{task.tag.label}</span>}
             </div>
 
-            <div className="flex flex-col grow">
+            <div className="flex flex-col grow mt-2">
                 {currentTaskId === task.id ? (
                     <input
                         className="max-h-6 p-1.5 rounded shadow-inner bg-[#e9ecef] dark:bg-[#686779] text-black dark:text-[#cdc1ff] font-normal"
@@ -39,9 +39,9 @@ export default function TaskContent({
                         {task.value}
                     </span>
                 )}
-            </div>
-            <div className="text-sm text-[#65717b] dark:text-white">
-                Created: {task.creationDate.toString().slice(0, 21)}
+                <div className="text-sm text-[#65717b] dark:text-white">
+                    Created: {task.creationDate.toString().slice(0, 21)}
+                </div>
             </div>
         </div>
     );

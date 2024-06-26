@@ -2,6 +2,22 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer components {
+    .react-select-container .react-select__option {
+        @apply dark:bg-[#525166] dark:text-white dark:hover:bg-[#7371fc];
+    }
+
+    .react-select-container .react-select__input-container,
+    .react-select-container .react-select__placeholder,
+    .react-select-container .react-select__single-value,
+    .react-select-container .react-select__control,
+    .react-select-container .react-select__control--is-focused,
+    .react-select-container .react-select__menu,
+    .react-select-container .react-select__indicator-separator {
+        @apply dark:bg-[#525166] dark:text-white;
+    }
+}
+
 @layer base {
     :root {
         --background: 0 0% 100%;
