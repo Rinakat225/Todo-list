@@ -3,7 +3,7 @@ import TaskContent from './TaskContent';
 import TaskActions from './TaskActions';
 import ReorderButtonGroup from './ReorderButtonGroup';
 
-export default function Task({task, setTasks, index, tasksArray}) {
+export default function Task({task, setTasks, index, tasksArray, sortBy}) {
     const [editedValue, setEditedValue] = useState('');
     const [currentTaskId, setCurrentTaskId] = useState('');
 
@@ -21,6 +21,7 @@ export default function Task({task, setTasks, index, tasksArray}) {
                     currentTaskId={currentTaskId}
                     setEditedValue={setEditedValue}
                     editedValue={editedValue}
+                    sortBy={sortBy}
                 />
             </div>
 

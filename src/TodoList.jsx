@@ -1,13 +1,15 @@
-import {useState, useEffect} from 'react';
+import {useState} from 'react';
 import NewTaskForm from './mainComponents/NewTaskForm';
 import Tasklist from './mainComponents/TaskList';
-import {LightBulbIcon} from '@heroicons/react/24/outline';
 import SortTasks from './mainComponents/SortTasks';
+import FilterTasks from './mainComponents/FilterTasks';
+import {LightBulbIcon} from '@heroicons/react/24/outline';
 
 export default function TodoList() {
     const [tasks, setTasks] = useState([]);
     const [darkModeOn, setDarkModeOn] = useState(false);
     const [sortBy, setSortBy] = useState(null);
+    const [currentFilter, setCurrentFilter] = useState(null);
 
     const handleDarkModeButtonClick = () => {
         setDarkModeOn(!darkModeOn);
@@ -38,16 +40,29 @@ export default function TodoList() {
                     tasks={tasks}
                     setTasks={setTasks}
                     setSortBy={setSortBy}
+                    setCurrentFilter={setCurrentFilter}
                 />
+                <div className="flex gap-1 w-full">
+                    <SortTasks
+                        tasks={tasks}
+                        setTasks={setTasks}
+                        sortBy={sortBy}
+                        setSortBy={setSortBy}
+                    />
 
-                <SortTasks
+                    <FilterTasks
+                        currentFilter={currentFilter}
+                        setCurrentFilter={setCurrentFilter}
+                        tasks={tasks}
+                    />
+                </div>
+
+                <Tasklist
                     tasks={tasks}
                     setTasks={setTasks}
                     sortBy={sortBy}
-                    setSortBy={setSortBy}
+                    currentFilter={currentFilter}
                 />
-
-                <Tasklist tasks={tasks} setTasks={setTasks} />
             </main>
         </div>
     );

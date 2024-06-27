@@ -6,10 +6,11 @@ export default function TaskContent({
     currentTaskId,
     setEditedValue,
     editedValue,
+    sortBy,
 }) {
     return (
         <div>
-            <div className="flex items-center text-sm text-[#65717b] dark:text-white mb-0.5">
+            <div className="flex items-center text-sm text-[#7371fc] dark:text-[#7371fc] mb-0.5">
                 {task.dueDate && (
                     <span className="flex items-center gap-0.5 mr-3">
                         <CalendarIcon className="size-3" />
@@ -39,9 +40,11 @@ export default function TaskContent({
                         {task.value}
                     </span>
                 )}
-                <div className="text-sm text-[#65717b] dark:text-white">
-                    Created: {task.creationDate.toString().slice(0, 21)}
-                </div>
+                {sortBy !== null && (
+                    <div className="text-xs text-[#65717b] dark:text-white">
+                        Created on {task.creationDate.toString().slice(0, 21)}
+                    </div>
+                )}
             </div>
         </div>
     );

@@ -1,15 +1,11 @@
-import {useState} from 'react';
 import Task from './Task';
-import Tabs from './Tabs';
 import {Reorder} from 'framer-motion';
 
-export default function TaskList({tasks, setTasks}) {
-    const [currentTab, setCurrentTab] = useState('all');
-
+export default function TaskList({tasks, setTasks, sortBy, currentFilter}) {
     const filteredTasks = tasks.filter((task) => {
-        if (currentTab === 'completed') {
+        if (currentFilter === 'completed') {
             return task.completed;
-        } else if (currentTab === 'inProgress') {
+        } else if (currentFilter === 'inProgress') {
             return !task.completed;
         } else {
             return tasks;
@@ -18,11 +14,6 @@ export default function TaskList({tasks, setTasks}) {
 
     return (
         <>
-            <Tabs
-                tasks={tasks}
-                currentTab={currentTab}
-                setCurrentTab={setCurrentTab}
-            />
             {tasks.length > 0 && (
                 <Reorder.Group axis="y" values={tasks} onReorder={setTasks}>
                     {filteredTasks.map((input, index) => (
@@ -32,6 +23,8 @@ export default function TaskList({tasks, setTasks}) {
                                 index={index}
                                 setTasks={setTasks}
                                 tasksArray={tasks}
+                                sortBy={sortBy}
+                                filteredTasks={filteredTasks}
                             />
                         </Reorder.Item>
                     ))}

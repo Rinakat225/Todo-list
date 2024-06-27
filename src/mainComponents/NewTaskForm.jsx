@@ -2,9 +2,13 @@ import {useState} from 'react';
 import {DatePicker} from '../components/ui/datePicker';
 import {ComboBoxResponsive} from '../components/ui/combobox';
 import {twMerge} from 'tailwind-merge';
-import SortTasks from './SortTasks';
 
-export default function NewTaskForm({tasks, setTasks, setSortBy}) {
+export default function NewTaskForm({
+    tasks,
+    setTasks,
+    setSortBy,
+    setCurrentFilter,
+}) {
     const [taskValue, setTaskValue] = useState('');
     const [date, setDate] = useState(new Date().toDateString());
     const [selectedTag, setSelectedTag] = useState('');
@@ -68,11 +72,13 @@ export default function NewTaskForm({tasks, setTasks, setSortBy}) {
 
         resetNewTaskFormStates();
 
-        setSortBy('sortby');
+        setSortBy(null);
+
+        setCurrentFilter(null);
     };
 
     return (
-        <div className="shadow-md rounded p-2 bg-white dark:bg-[#525166]">
+        <div className="shadow-md rounded p-2 bg-white dark:bg-[#525166] mb-3">
             <form
                 className="flex items-center space-x-2"
                 onSubmit={handleSubmitUserInputButtonClick}

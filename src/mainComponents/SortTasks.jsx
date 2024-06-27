@@ -1,6 +1,4 @@
 import {ArrowUpIcon, ArrowDownIcon} from '@heroicons/react/16/solid';
-import {color} from 'framer-motion';
-import {AlignCenter} from 'lucide-react';
 import React from 'react';
 import Select from 'react-select';
 
@@ -23,11 +21,13 @@ export default function SortTasks({tasks, setTasks, sortBy, setSortBy}) {
         setSortBy(sortType);
     };
 
+    const labelStyle = 'flex gap-1 items-center cursor-pointer';
+
     const options = [
         {
             value: 'dueDate-up',
             label: (
-                <span className="flex gap-1 items-center cursor-pointer">
+                <span className={labelStyle}>
                     <ArrowUpIcon className="size-4" />
                     Due date
                 </span>
@@ -36,7 +36,7 @@ export default function SortTasks({tasks, setTasks, sortBy, setSortBy}) {
         {
             value: 'dueDate-down',
             label: (
-                <span className="flex gap-1 items-center cursor-pointer">
+                <span className={labelStyle}>
                     <ArrowDownIcon className="size-4" />
                     Due date
                 </span>
@@ -45,7 +45,7 @@ export default function SortTasks({tasks, setTasks, sortBy, setSortBy}) {
         {
             value: 'creationDate-up',
             label: (
-                <span className="flex gap-1 items-center cursor-pointer">
+                <span className={labelStyle}>
                     <ArrowUpIcon className="size-4" />
                     Creation date
                 </span>
@@ -54,7 +54,7 @@ export default function SortTasks({tasks, setTasks, sortBy, setSortBy}) {
         {
             value: 'creationDate-down',
             label: (
-                <span className="flex gap-1 items-center cursor-pointer">
+                <span className={labelStyle}>
                     <ArrowDownIcon className="size-4" />
                     Creation date
                 </span>
@@ -67,8 +67,7 @@ export default function SortTasks({tasks, setTasks, sortBy, setSortBy}) {
     const customStyles = {
         container: (provided) => ({
             ...provided,
-            width: '50%',
-            padding: '0.5rem 0',
+            padding: '1rem 0',
             fontSize: '14px',
         }),
 
@@ -95,7 +94,6 @@ export default function SortTasks({tasks, setTasks, sortBy, setSortBy}) {
 
         control: (provided) => ({
             ...provided,
-            /*  background: 'white', */
             border: 'none',
             '&:hover': {
                 cursor: 'pointer',
@@ -123,7 +121,7 @@ export default function SortTasks({tasks, setTasks, sortBy, setSortBy}) {
     };
 
     return (
-        <div>
+        <div className="w-6/12">
             {tasks.length > 1 && (
                 <Select
                     className="react-select-container"
@@ -146,4 +144,3 @@ export default function SortTasks({tasks, setTasks, sortBy, setSortBy}) {
         </div>
     );
 }
-/* text-black self-start cursor-pointer py-1 text-sm w-1/2 */
