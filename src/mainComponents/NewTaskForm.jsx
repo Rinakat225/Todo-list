@@ -1,12 +1,26 @@
 import {useState} from 'react';
 import {DatePicker} from '../components/ui/datePicker';
 import {ComboBoxResponsive} from '../components/ui/combobox';
+import {twMerge} from 'tailwind-merge';
 
-export default function NewTaskForm({tasks, setTasks}) {
+export default function NewTaskForm({
+    tasks,
+    setTasks,
+    setSortBy,
+    setCurrentFilter,
+}) {
     const [taskValue, setTaskValue] = useState('');
-    const [date, setDate] = useState(null);
-    const [customTag, setCustomTag] = useState('');
+    const [date, setDate] = useState(new Date().toDateString());
     const [selectedTag, setSelectedTag] = useState('');
+    const [creationDate, setCreationDate] = useState(
+        new Date().toString().slice(0, 21)
+    );
+
+    const resetNewTaskFormStates = () => {
+        setTaskValue('');
+        setDate(new Date().toDateString());
+        setSelectedTag('');
+    };
 
     const handleAddNewTaskButtonClick = (task) => {
         setTasks((previousTasks) => [task, ...previousTasks]);
@@ -16,26 +30,24 @@ export default function NewTaskForm({tasks, setTasks}) {
         e.preventDefault();
 
         if (!taskValue) return;
+        if (taskValue.trim() === '') return;
 
         const task = {
             value: taskValue,
             completed: false,
             id: Date.now(),
             tag: selectedTag,
-            dueDate: null,
+            dueDate: date,
+            creationDate: creationDate,
         };
 
         handleAddNewTaskButtonClick(task);
 
         handleAddDueDateButtonClick(task.id);
 
-        setTaskValue('');
+        resetNewTaskFormStates();
 
-        setCustomTag('');
-
-        setDate(null);
-
-        setSelectedTag('');
+        setCreationDate(new Date().toString().slice(0, 21));
     };
 
     const handleAddDueDateButtonClick = (id) => {
@@ -56,14 +68,17 @@ export default function NewTaskForm({tasks, setTasks}) {
 
         if (tasks.length === 0) return;
 
-        setTaskValue('');
         setTasks([]);
-        setDate(null);
-        setSelectedTag('');
+
+        resetNewTaskFormStates();
+
+        setSortBy(null);
+
+        setCurrentFilter(null);
     };
 
     return (
-        <div className="shadow-md rounded flex items-center p-2 bg-white dark:bg-[#525166]">
+        <div className="shadow-md rounded p-2 bg-white dark:bg-[#525166] mb-3">
             <form
                 className="flex items-center space-x-2"
                 onSubmit={handleSubmitUserInputButtonClick}
@@ -79,21 +94,18 @@ export default function NewTaskForm({tasks, setTasks}) {
                 <ComboBoxResponsive
                     selectedTag={selectedTag}
                     setSelectedTag={setSelectedTag}
-                    customTag={customTag}
-                    setCustomTag={setCustomTag}
                 />
 
                 <DatePicker date={date} setDate={setDate} />
 
-                <button className="p-2 rounded font-semibold bg-[#7371fc] text-white hover:text-[#cdc1ff]">
+                <button className="p-2 rounded font-normal bg-[#7371fc] text-white hover:text-[#cdc1ff]">
                     Add
                 </button>
                 <button
-                    className={
-                        tasks.length === 0
-                            ? 'p-2 rounded font-normal text-[#cdc1ff] cursor-default'
-                            : 'p-2 font-normal text-[#7371fc] hover:text-[#cdc1ff]'
-                    }
+                    className={twMerge(
+                        'p-2 rounded font-normal text-[#7371fc] hover:text-[#cdc1ff]',
+                        tasks.length === 0 && 'text-[#cdc1ff] cursor-default '
+                    )}
                     onClick={handleClearAllTasksButtonClick}
                 >
                     Clear all

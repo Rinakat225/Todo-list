@@ -40,13 +40,9 @@ const tags = [
     },
 ];
 
-export function ComboBoxResponsive({
-    selectedTag,
-    setSelectedTag,
-    customTag,
-    setCustomTag,
-}) {
+export function ComboBoxResponsive({selectedTag, setSelectedTag}) {
     const [open, setOpen] = useState(false);
+    const [customTag, setCustomTag] = useState('');
     const [customTagsList, setCustomTagsList] = useState([]);
 
     return (
@@ -122,7 +118,7 @@ function StatusList({
             </Command>
             <div className="flex flex-col gap-2 p-3 m-0.5 w-25">
                 <input
-                    className="p-1.5 rounded shadow-md text-xs dark:text-black"
+                    className="p-1.5 rounded shadow-md text-xs dark:bg-[#686779]"
                     type="text"
                     placeholder="Write a custom tag..."
                     value={customTag}
