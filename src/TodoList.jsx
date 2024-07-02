@@ -1,15 +1,21 @@
-import {useState} from 'react';
+import {useState, useEffect} from 'react';
 import NewTaskForm from './mainComponents/NewTaskForm';
 import Tasklist from './mainComponents/TaskList';
-import SortTasks from './mainComponents/SortTasks';
-import FilterTasks from './mainComponents/FilterTasks';
+import TaskSort from './mainComponents/TaskSort';
+import TaskFilter from './mainComponents/TaskFilter';
 import {LightBulbIcon} from '@heroicons/react/24/outline';
 
 export default function TodoList() {
-    const [tasks, setTasks] = useState([]);
+    const [tasks, setTasks] = useState(
+        JSON.parse(localStorage.getItem('tasks')) || []
+    );
     const [darkModeOn, setDarkModeOn] = useState(false);
     const [sortBy, setSortBy] = useState(null);
     const [currentFilter, setCurrentFilter] = useState(null);
+
+    useEffect(() => {
+        localStorage.setItem('tasks', JSON.stringify(tasks));
+    }, [tasks]);
 
     const handleDarkModeButtonClick = () => {
         setDarkModeOn(!darkModeOn);
@@ -42,27 +48,28 @@ export default function TodoList() {
                     setSortBy={setSortBy}
                     setCurrentFilter={setCurrentFilter}
                 />
-                <div className="flex gap-1 w-full">
-                    <SortTasks
+                {tasks.length > 1 && (
+                    <div className="flex gap-1 w-full">
+                        <TaskSort
+                            setTasks={setTasks}
+                            sortBy={sortBy}
+                            setSortBy={setSortBy}
+                        />
+
+                        <TaskFilter
+                            currentFilter={currentFilter}
+                            setCurrentFilter={setCurrentFilter}
+                        />
+                    </div>
+                )}
+                {tasks.length > 0 && (
+                    <Tasklist
                         tasks={tasks}
                         setTasks={setTasks}
                         sortBy={sortBy}
-                        setSortBy={setSortBy}
-                    />
-
-                    <FilterTasks
                         currentFilter={currentFilter}
-                        setCurrentFilter={setCurrentFilter}
-                        tasks={tasks}
                     />
-                </div>
-
-                <Tasklist
-                    tasks={tasks}
-                    setTasks={setTasks}
-                    sortBy={sortBy}
-                    currentFilter={currentFilter}
-                />
+                )}
             </main>
         </div>
     );

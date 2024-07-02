@@ -2,7 +2,7 @@ import {ArrowUpIcon, ArrowDownIcon} from '@heroicons/react/16/solid';
 import React from 'react';
 import Select from 'react-select';
 
-export default function SortTasks({tasks, setTasks, sortBy, setSortBy}) {
+export default function TaskSort({setTasks, sortBy, setSortBy}) {
     const handleSortTasks = (selectedOption) => {
         const sortType = selectedOption.value;
 
@@ -122,25 +122,23 @@ export default function SortTasks({tasks, setTasks, sortBy, setSortBy}) {
 
     return (
         <div className="w-6/12">
-            {tasks.length > 1 && (
-                <Select
-                    className="react-select-container"
-                    classNamePrefix="react-select"
-                    placeholder="Sort by"
-                    value={selectedOption}
-                    onChange={handleSortTasks}
-                    isSearchable={false}
-                    options={options}
-                    styles={customStyles}
-                    theme={(theme) => ({
-                        ...theme,
-                        colors: {
-                            ...theme.colors,
-                            primary: 'black',
-                        },
-                    })}
-                />
-            )}
+            <Select
+                className="react-select-container"
+                classNamePrefix="react-select"
+                placeholder="Sort by"
+                value={selectedOption}
+                onChange={handleSortTasks}
+                isSearchable={false}
+                options={options}
+                styles={customStyles}
+                theme={(theme) => ({
+                    ...theme,
+                    colors: {
+                        ...theme.colors,
+                        primary: 'black',
+                    },
+                })}
+            />
         </div>
     );
 }

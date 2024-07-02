@@ -1,6 +1,6 @@
 import Select from 'react-select';
 
-export default function FilterTasks({tasks, setCurrentFilter, currentFilter}) {
+export default function TaskFilter({setCurrentFilter, currentFilter}) {
     const options = [
         {value: 'all', label: 'All'},
         {value: 'inProgress', label: 'In progress'},
@@ -69,27 +69,25 @@ export default function FilterTasks({tasks, setCurrentFilter, currentFilter}) {
 
     return (
         <div className="w-6/12">
-            {tasks.length > 1 && (
-                <Select
-                    className="react-select-container"
-                    classNamePrefix="react-select"
-                    placeholder="Filter tasks"
-                    value={selectedOption}
-                    options={options}
-                    onChange={(selectedOption) => {
-                        setCurrentFilter(selectedOption.value);
-                    }}
-                    isSearchable={false}
-                    styles={customStyles}
-                    theme={(theme) => ({
-                        ...theme,
-                        colors: {
-                            ...theme.colors,
-                            primary: 'black',
-                        },
-                    })}
-                />
-            )}
+            <Select
+                className="react-select-container"
+                classNamePrefix="react-select"
+                placeholder="Filter tasks"
+                value={selectedOption}
+                options={options}
+                onChange={(selectedOption) => {
+                    setCurrentFilter(selectedOption.value);
+                }}
+                isSearchable={false}
+                styles={customStyles}
+                theme={(theme) => ({
+                    ...theme,
+                    colors: {
+                        ...theme.colors,
+                        primary: 'black',
+                    },
+                })}
+            />
         </div>
     );
 }

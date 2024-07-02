@@ -13,23 +13,19 @@ export default function TaskList({tasks, setTasks, sortBy, currentFilter}) {
     });
 
     return (
-        <>
-            {tasks.length > 0 && (
-                <Reorder.Group axis="y" values={tasks} onReorder={setTasks}>
-                    {filteredTasks.map((input, index) => (
-                        <Reorder.Item value={input} key={input.id}>
-                            <Task
-                                task={input}
-                                index={index}
-                                setTasks={setTasks}
-                                tasksArray={tasks}
-                                sortBy={sortBy}
-                                filteredTasks={filteredTasks}
-                            />
-                        </Reorder.Item>
-                    ))}
-                </Reorder.Group>
-            )}
-        </>
+        <Reorder.Group axis="y" values={tasks} onReorder={setTasks}>
+            {filteredTasks.map((input, index) => (
+                <Reorder.Item value={input} key={input.id}>
+                    <Task
+                        task={input}
+                        index={index}
+                        setTasks={setTasks}
+                        tasksArray={tasks}
+                        sortBy={sortBy}
+                        filteredTasks={filteredTasks}
+                    />
+                </Reorder.Item>
+            ))}
+        </Reorder.Group>
     );
 }
